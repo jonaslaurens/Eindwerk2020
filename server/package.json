@@ -1,0 +1,26 @@
+{
+  "name": "node-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jonas Laurens <lauwe505@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "pm2 start ecosystem.config.js",
+    "start-watch": "pm2 start --watch ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "example-player": "node ./examples/player.js",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=12.13.0",
+    "pm2": ">=4.1.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
