@@ -52,6 +52,10 @@ class Table {
     this.players.push(player);
   }
 
+  getSockets() {
+    return this.players.map((player) => player.socket);
+  }
+
   // start a game
   startGame() {
     // check if we have enough players

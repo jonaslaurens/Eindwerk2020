@@ -26,12 +26,12 @@ const attachListenersToSocket = (socket, casino) => {
 
   socket.on('decision', async (payload) => {
     // get current player
-    const { player, index } = getCurrentPlayer(casino.getTable(), socket);
+    const { player, index } = getCurrentPlayer(table, socket);
 
     console.info(`${player.name} will ${payload.decision}`);
 
     // get the current round
-    const currentRound = casino.getTable().getRound();
+    const currentRound = table.getRound();
 
     // handle decision
     switch (payload.decision) {
@@ -48,7 +48,7 @@ const attachListenersToSocket = (socket, casino) => {
         break;
     }
 
-    await continueRound(casino.getTable(), currentRound);
+    await continueRound(table, currentRound);
   });
 
   socket.on('disconnect', () => {
@@ -59,7 +59,7 @@ const attachListenersToSocket = (socket, casino) => {
 
     // remove user from players array
     if (index !== -1) {
-      casino.getTable().players.splice(index, 1);
+      table.players.splice(index, 1);
     }
   });
 };
