@@ -1,14 +1,11 @@
 const Player = require('../Model/player/Player');
-const generateID = require('../Vendor/generateID');
 
-const addPlayer = (name, table, socket) => {
-  const player = new Player(name, generateID(), socket);
-
-  table.addPlayer(player);
+const addPlayer = (name, casino, socket) => {
+  const table = casino.registerNewPlayer(new Player(name, socket));
 
   console.info(`player: ${name} added to table`);
 
-  return player;
+  return table;
 };
 
 module.exports = addPlayer;

@@ -1,9 +1,12 @@
+const generateID = require('../../Vendor/generateID');
 const Player = require('../player/Player');
 const Round = require('../round/Round');
 const handleDecider = require('../../Helpers/handleDecider');
 
 class Table {
   constructor(playerLimit) {
+    this.id = generateID();
+
     // List of players (max 4 players)
     this.players = [];
 
@@ -23,8 +26,8 @@ class Table {
     this.previousStarter = 0;
   }
 
-  isFull() {
-    return this.players.length === this.playerLimit;
+  hasAvailableSpots() {
+    return this.players.length < this.playerLimit;
   }
 
   getRound() {
@@ -39,11 +42,10 @@ class Table {
       throw new TypeError('This is not a valid player');
     }
 
-    if (this.isFull()) {
+    if (!this.hasAvailableSpots()) {
       throw new TypeError('There is no more room at the table');
     }
 
-    // TODO: should be changed in future release so we start with player credits
     // give player 1000 starting credits
     player.credits = 1000;
 
@@ -63,7 +65,7 @@ class Table {
     }
 
     // create new array of our players that are gonna play a game
-    const playingPlayers = this.players.map(player => player);
+    const playingPlayers = this.players.map((player) => player);
 
     // start new round with current players
     this.currentRound = new Round(playingPlayers, this.previousStarter);

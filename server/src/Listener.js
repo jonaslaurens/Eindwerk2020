@@ -6,25 +6,25 @@ const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
 const attachListenersToSocket = (socket, casino) => {
-  socket.on('login', async payload => {
-    const table = casino.getTable();
+  let table = null;
 
+  socket.on('login', async (payload) => {
     try {
-      const player = await addPlayer(payload.name, table, socket);
+      table = await addPlayer(payload.name, casino, socket);
 
       // if we added a player try starting a game
-      if (player) {
+      if (table) {
         table.startGame();
       }
     } catch (error) {
       socket.emit('casino.error', {
         type: 'addPlayer',
-        message: error.message
+        message: error.message,
       });
     }
   });
 
-  socket.on('decision', async payload => {
+  socket.on('decision', async (payload) => {
     // get current player
     const { player, index } = getCurrentPlayer(casino.getTable(), socket);
 
@@ -55,7 +55,7 @@ const attachListenersToSocket = (socket, casino) => {
     // find user based on socket id
     const index = casino
       .getTable()
-      .players.findIndex(player => player.socket.id === socket.id);
+      .players.findIndex((player) => player.socket.id === socket.id);
 
     // remove user from players array
     if (index !== -1) {
@@ -66,7 +66,7 @@ const attachListenersToSocket = (socket, casino) => {
 
 class Listener {
   constructor(io, casino) {
-    io.on('connection', socket => {
+    io.on('connection', (socket) => {
       console.info('A new connection was established');
       attachListenersToSocket(socket, casino);
     });

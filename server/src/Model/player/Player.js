@@ -1,13 +1,14 @@
 const isValidPlayer = require('../validators/player/isValidPlayer');
+const generateID = require('../../Vendor/generateID');
 
 class Player {
-  constructor(name, playerID, socket) {
-    if (!isValidPlayer({ name, playerID })) {
+  constructor(name, socket) {
+    if (!isValidPlayer({ name })) {
       throw new TypeError('Player class does not meet the requirements!');
     }
 
     this.name = name;
-    this.id = playerID;
+    this.id = generateID();
     this.socket = socket;
     this.cards;
     this.credits = 0;
