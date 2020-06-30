@@ -5,8 +5,6 @@ const handleFold = require('./Actions/handleFold');
 const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
-const SUPER_SECRET_CODE = require('./Constants/secretCode');
-
 const attachListenersToSocket = (socket, casino) => {
   let table = null;
 
@@ -14,15 +12,14 @@ const attachListenersToSocket = (socket, casino) => {
     try {
       table = await addPlayer(payload, casino, socket);
 
+      socket.emit('message', 'Welcome to our casino');
+
       // if we added a player try starting a game
       if (table) {
         table.startGame();
       }
     } catch (error) {
-      socket.emit('casino.error', {
-        type: 'addPlayer',
-        message: error.message,
-      });
+      socket.emit('casino.error', error.message);
     }
   });
 
