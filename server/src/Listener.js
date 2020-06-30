@@ -5,12 +5,14 @@ const handleFold = require('./Actions/handleFold');
 const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
+const SUPER_SECRET_CODE = require('./Constants/secretCode');
+
 const attachListenersToSocket = (socket, casino) => {
   let table = null;
 
   socket.on('login', async (payload) => {
     try {
-      table = await addPlayer(payload.name, casino, socket);
+      table = await addPlayer(payload, casino, socket);
 
       // if we added a player try starting a game
       if (table) {
