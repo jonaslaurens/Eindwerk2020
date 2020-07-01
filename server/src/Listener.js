@@ -9,6 +9,8 @@ const attachListenersToSocket = (socket, casino) => {
   let table = null;
 
   socket.on('login', async (payload) => {
+    console.log(payload);
+
     try {
       table = await addPlayer(payload, casino, socket);
 

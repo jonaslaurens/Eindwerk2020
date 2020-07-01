@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useContext } from 'react';
 
+// redux
+import { useDispatch } from 'react-redux';
 import { submitValues } from './slice';
 
+// context
+import { WSContext } from '../../context/provider/WSContext';
+
+// material UI
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -42,25 +47,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const classes = useStyles();
 
-  const dispatch = useDispatch();
+  const { formValues, handleChange, handleSubmit, errors } = useContext(
+    WSContext
+  );
 
-  const [values, setValues] = useState(INITIAL_STATE);
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    dispatch(submitValues(values));
-  };
+  if (errors) {
+    console.log(errors);
+  }
 
   return (
     <div className={classes.login}>
@@ -70,6 +66,7 @@ const LoginPage = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {errors ? <p>{errors}</p> : null}
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -81,7 +78,7 @@ const LoginPage = () => {
               name="name"
               autoComplete="name"
               autoFocus
-              value={values.name}
+              value={formValues.name}
               onChange={handleChange}
             />
             <TextField
@@ -94,7 +91,7 @@ const LoginPage = () => {
               type="text"
               id="casinoServer"
               autoComplete="casinoServer"
-              value={values.casinoServer}
+              value={formValues.casinoServer}
               onChange={handleChange}
             />
             <TextField
@@ -107,7 +104,7 @@ const LoginPage = () => {
               type="password"
               id="secretCode"
               autoComplete="secretCode"
-              value={values.secretCode}
+              value={formValues.secretCode}
               onChange={handleChange}
             />
             <Button

@@ -4,8 +4,6 @@ import io from 'socket.io-client';
 
 export const loginName = 'login';
 
-// TODO: try seperating the socket from the reducer
-
 export const loginSlice = createSlice({
   name: 'login',
   initialState: {
@@ -16,9 +14,6 @@ export const loginSlice = createSlice({
   reducers: {
     submitValues: (state, { payload }) => {
       state.formValues = payload;
-
-      let errorMsg;
-
       const socket = io(BASE_URL);
 
       socket.emit('login', state.formValues);
@@ -32,11 +27,6 @@ export const loginSlice = createSlice({
         // state.error = errorMsg;
         console.log(errorMsg);
       });
-
-      console.log(errorMsg);
-
-      // state.error = errorMsg;
-      console.log(state.error);
     },
   },
 });
