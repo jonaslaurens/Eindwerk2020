@@ -11,24 +11,7 @@ export const loginSlice = createSlice({
     isLoggedIn: false,
     error: {},
   },
-  reducers: {
-    submitValues: (state, { payload }) => {
-      state.formValues = payload;
-      const socket = io(BASE_URL);
-
-      socket.emit('login', state.formValues);
-
-      socket.on('message', console.log);
-
-      state.isLoggedIn = true;
-
-      socket.on('casino.error', (payload) => {
-        const errorMsg = JSON.stringify(payload);
-        // state.error = errorMsg;
-        console.log(errorMsg);
-      });
-    },
-  },
+  reducers: {},
 });
 
 export const { submitValues } = loginSlice.actions;

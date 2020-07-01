@@ -1,8 +1,4 @@
-import React, { useState, useContext } from 'react';
-
-// redux
-import { useDispatch } from 'react-redux';
-import { submitValues } from './slice';
+import React, { useState, useContext, useEffect } from 'react';
 
 // context
 import { WSContext } from '../../context/provider/WSContext';
@@ -50,13 +46,27 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = (props) => {
   const classes = useStyles();
 
-  const { formValues, handleChange, handleSubmit, errors } = useContext(
-    WSContext
-  );
+  const { message, emitEvent, errors } = useContext(WSContext);
 
-  if (errors) {
-    console.log(errors);
-  }
+  const [formValues, setFormValues] = useState(INITIAL_STATE);
+
+  useEffect(() => {
+    if (message.status) {
+      setFormValues(INITIAL_STATE);
+    }
+  }, [message]);
+
+  const handleChange = (event) => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    emitEvent('login', formValues);
+  };
 
   return (
     <div className={classes.login}>
@@ -66,7 +76,6 @@ const LoginPage = (props) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          {errors ? <p>{errors}</p> : null}
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"

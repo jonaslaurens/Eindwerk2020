@@ -2,43 +2,43 @@ import React, { useState, useEffect, createContext } from 'react';
 import io from 'socket.io-client';
 import { BASE_URL } from '../../helpers/baseUrl';
 
-const INITIAL_STATE = {
-  name: '',
-  casinoServer: '',
-  secretCode: '',
-};
+const socket = io(BASE_URL);
 
 export const WSContext = createContext();
 
 export const WSProvider = (props) => {
-  const [socket, setSocket] = useState({});
-  const [formValues, setFormValues] = useState(INITIAL_STATE);
+  const [message, setMessage] = useState({});
   const [errors, setErrors] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setSocket(io(BASE_URL));
-  }, []);
-
-  const handleChange = (event) => {
-    setFormValues({
-      ...formValues,
-      [event.target.name]: event.target.value,
+    socket.on('message', (payload) => {
+      setMessage(payload);
     });
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await socket.emit('login', formValues);
+    socket.on('casino.error', (payload) => {
+      setErrors(payload);
+    });
+  }, [errors]);
 
-    await socket.on('casino.error', (payload) => {
-      const errorMsg = payload;
-      setErrors(errorMsg);
+  const emitEvent = async (eventName, payload) => {
+    await socket.emit(eventName, payload, (confirmation) => {
+      setMessage(confirmation);
+
+      if (confirmation.status && confirmation.type === 'login') {
+        setIsLoggedIn(!isLoggedIn);
+      }
     });
   };
 
   return (
     <WSContext.Provider
-      value={{ formValues, handleChange, handleSubmit, errors }}
+      value={{
+        message,
+        emitEvent,
+        errors,
+        isLoggedIn,
+      }}
     >
       {props.children}
     </WSContext.Provider>

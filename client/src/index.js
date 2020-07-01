@@ -6,10 +6,15 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+// context
+import { WSProvider } from './context/provider/WSContext';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <WSProvider>
+        <App />
+      </WSProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

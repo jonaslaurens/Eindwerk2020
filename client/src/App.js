@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 
 // redux
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from './components/Login/slice';
-
-// context
-import { WSProvider } from './context/provider/WSContext';
+import { WSContext } from './context/provider/WSContext';
 
 // components
 import LoginPage from './components/Login';
 
-function App() {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+const App = () => {
+  const { message, isLoggedIn } = useContext(WSContext);
 
   return (
-    <WSProvider>
-      <div className="App">
-        {!isLoggedIn ? <LoginPage /> : <h1>Hello there</h1>}
-      </div>
-    </WSProvider>
+    <div className="App">
+      {!isLoggedIn ? <LoginPage /> : <h1>{message.msg}</h1>}
+    </div>
   );
-}
+};
 
 export default App;

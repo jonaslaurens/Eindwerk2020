@@ -8,13 +8,17 @@ const continueRound = require('./Actions/continueRound');
 const attachListenersToSocket = (socket, casino) => {
   let table = null;
 
-  socket.on('login', async (payload) => {
+  socket.on('login', async (payload, cb) => {
     console.log(payload);
 
     try {
       table = await addPlayer(payload, casino, socket);
 
-      socket.emit('message', 'Welcome to our casino');
+      cb({
+        type: 'login',
+        status: true,
+        msg: 'Welcome to our casino',
+      });
 
       // if we added a player try starting a game
       if (table) {

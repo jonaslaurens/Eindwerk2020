@@ -1,1 +1,1 @@
-module.exports = SUPER_SECRET_CODE = 'aze123';
+module.exports = SUPER_SECRET_CODE = 'aze';
