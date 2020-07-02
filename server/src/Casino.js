@@ -8,17 +8,19 @@ class Casino {
 
   registerNewPlayer(player) {
     // check if we got a table with free spots
-    let freeTable = this.getEmptyTable();
+    let table = this.getEmptyTable();
 
     // if there is no table with free spots create a new one
-    if (!freeTable) {
-      freeTable = new Table(4);
-      this.tables.push(freeTable);
+    if (!table) {
+      table = new Table(4);
+      this.tables.push(table);
     }
 
-    freeTable.addPlayer(player);
+    table.addPlayer(player);
 
-    return freeTable;
+    console.info(`player: ${player.name} added to table`);
+
+    return { table, player };
   }
 
   // returns a table based on it's id if it exists

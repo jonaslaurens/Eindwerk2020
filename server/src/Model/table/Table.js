@@ -80,5 +80,13 @@ class Table {
       this.players.length
     );
   }
+
+  toObject() {
+    return {
+      id: this.id,
+      players: this.players,
+      playerLimit: this.playerLimit,
+    };
+  }
 }
 module.exports = Table;

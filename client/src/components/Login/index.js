@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-// context
-import { WSContext } from '../../context/provider/WSContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { submitValues, login, selectFormValues } from './slice';
 
 // material UI
 import Button from '@material-ui/core/Button';
@@ -46,15 +46,17 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = (props) => {
   const classes = useStyles();
 
-  const { message, emitEvent, errors } = useContext(WSContext);
+  // const { message, emitEvent, errors } = useContext(WSContext);
 
   const [formValues, setFormValues] = useState(INITIAL_STATE);
 
-  useEffect(() => {
-    if (message.status) {
-      setFormValues(INITIAL_STATE);
-    }
-  }, [message]);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (message.status) {
+  //     setFormValues(INITIAL_STATE);
+  //   }
+  // }, [message]);
 
   const handleChange = (event) => {
     setFormValues({
@@ -65,7 +67,8 @@ const LoginPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    emitEvent('login', formValues);
+
+    dispatch(login(formValues));
   };
 
   return (

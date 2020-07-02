@@ -1,24 +1,18 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')({
-  serveClient: false,
-});
-
+const cors = require('cors');
 const Casino = require('./src/Casino');
-const Listener = require('./src/Listener');
+const router = require('./router');
 
-// serve a simple homepage over http
-app.get('/', function (req, res) {
-  res.send('<h1>Node js Example</h1>');
-});
+app.use(express.json());
+app.use(cors());
+
+const casino = new Casino('Royal');
+
+router(app, casino);
 
 // we start our server on port 3050
 http.listen(3050, function () {
   console.log('listening on *:3050');
 });
-
-// attach our socket.io instance
-io.attach(http);
-
-const myCasino = new Casino('Royal');
-new Listener(io, myCasino);

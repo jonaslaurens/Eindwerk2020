@@ -1,5 +1,5 @@
-module.exports = player => {
-  const { name, playerID } = player;
+module.exports = (player) => {
+  const { name } = player;
 
   // name must be a string
   if (typeof name !== 'string') {
