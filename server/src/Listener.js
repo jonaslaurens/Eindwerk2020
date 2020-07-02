@@ -14,11 +14,21 @@ const attachListenersToSocket = (socket, casino) => {
     try {
       table = await addPlayer(payload, casino, socket);
 
-      cb({
+      socket.emit('loggedIn', {
         type: 'login',
         status: true,
         msg: 'Welcome to our casino',
+        player: payload.name,
+        tableID: table.id,
+        // players: table.players,
       });
+      // cb({
+      //   type: 'login',
+      //   status: true,
+      //   msg: 'Welcome to our casino',
+      //   player: payload.name,
+      //   table: table,
+      // });
 
       // if we added a player try starting a game
       if (table) {
@@ -58,14 +68,13 @@ const attachListenersToSocket = (socket, casino) => {
 
   socket.on('disconnect', () => {
     // find user based on socket id
-    const index = casino
-      .getTable()
-      .players.findIndex((player) => player.socket.id === socket.id);
-
-    // remove user from players array
-    if (index !== -1) {
-      table.players.splice(index, 1);
-    }
+    // const index = casino
+    //   .getTable()
+    //   .players.findIndex((player) => player.socket.id === socket.id);
+    // // remove user from players array
+    // if (index !== -1) {
+    //   table.players.splice(index, 1);
+    // }
   });
 };
 
