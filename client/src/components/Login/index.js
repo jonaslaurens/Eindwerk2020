@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { submitValues, login, selectFormValues } from './slice';
+import { login, selectErrors } from './slice';
 
 // material UI
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+  Container,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 const INITIAL_STATE = {
   name: '',
@@ -46,17 +48,11 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = (props) => {
   const classes = useStyles();
 
-  // const { message, emitEvent, errors } = useContext(WSContext);
-
   const [formValues, setFormValues] = useState(INITIAL_STATE);
 
-  const dispatch = useDispatch();
+  const errors = useSelector(selectErrors);
 
-  // useEffect(() => {
-  //   if (message.status) {
-  //     setFormValues(INITIAL_STATE);
-  //   }
-  // }, [message]);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setFormValues({

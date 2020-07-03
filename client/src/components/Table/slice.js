@@ -1,31 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { BASE_URL } from '../../helpers/baseUrl';
+import Axios from 'axios';
 
 export const tableName = 'table';
+
+export const getData = (id) => (dispatch) => {
+  Axios.get(`${BASE_URL}/table/${id}`).then((res) => console.log(res.data));
+};
 
 export const tableSlice = createSlice({
   name: 'table',
   initialState: {
-    tables: [],
+    table: {},
   },
   reducers: {
     addTable: (state, { payload }) => {
-      console.log(state.tables.find((table) => table.id === payload));
-
-      if (
-        !state.tables.find((table) => table.id !== payload) ||
-        state.tables.length < 0
-      ) {
-        state.tables.push(payload);
+      if (state.table.id !== payload) {
+        state.table = payload;
       }
-    },
-    addPlayer: (state, { payload }) => {
-      state.players.push(payload);
     },
   },
 });
 
-export const { addTable, addPlayer } = tableSlice.actions;
+export const { addTable } = tableSlice.actions;
 
-export const selectPlayers = (state) => state.table.players;
+export const selectId = (state) => state.table.table.id;
 
 export default tableSlice.reducer;

@@ -1,5 +1,6 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
+const SUPER_SECRET_CODE = require('../src/Constants/secretCode');
 
 const isValidLogin = (data) => {
   let errors = {};

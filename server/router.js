@@ -1,5 +1,4 @@
 const Player = require('./src/Model/player/Player');
-const SUPER_SECRET_CODE = require('./src/Constants/secretCode');
 const { isValidLogin } = require('./validation/routerValidation');
 
 module.exports = (app, casino) => {
@@ -27,8 +26,12 @@ module.exports = (app, casino) => {
 
   // handle get table info
   app.get('/table/:id', (req, res) => {
-    console.log(req.params.id);
     const table = casino.getTable(req.params.id);
-    console.log(table);
+
+    if (!table) {
+      return res.status(400).json({ msg: 'That table does not exist' });
+    }
+
+    return res.status(200).json(table);
   });
 };
