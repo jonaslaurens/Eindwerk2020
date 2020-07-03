@@ -67,8 +67,6 @@ const LoginPage = () => {
     dispatch(login(formValues));
   };
 
-  console.log(error);
-
   return (
     <div className={classes.login}>
       <Container component="main" maxWidth="xs">
