@@ -24,6 +24,8 @@ export const tableSlice = createSlice({
 
 export const { addTable } = tableSlice.actions;
 
+export const selectTable = (state) => state.table.table;
+
 export const selectId = (state) => state.table.table.id;
 
 export default tableSlice.reducer;

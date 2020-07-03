@@ -7,22 +7,25 @@ import { selectLoginState } from './components/Login/slice';
 
 // components
 import LoginPage from './components/Login';
+import Table from './components/Table';
 
 const App = () => {
   const dispatch = useDispatch();
   const tableId = useSelector(selectId);
   const isLoggedIn = useSelector(selectLoginState);
 
-  setInterval(() => {
-    if (tableId) {
-      dispatch(getData(tableId));
-    }
-  }, 2000);
+  useEffect(() => {
+    setInterval(() => {
+      if (tableId) {
+        dispatch(getData(tableId));
+      }
+    }, 2000);
+  }, [tableId]);
 
   return (
     <div className="App">
-      <LoginPage />
-      {/* {!isLoggedIn ? <LoginPage /> : <h1>{message.msg}</h1>} */}
+      {/* <Table /> */}
+      {!isLoggedIn ? <LoginPage /> : <Table />}
     </div>
   );
 };

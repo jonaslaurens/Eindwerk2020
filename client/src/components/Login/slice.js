@@ -45,4 +45,6 @@ export const selectLoginState = (state) => state.login.isLoggedIn;
 
 export const selectError = (state) => state.login.error;
 
+export const selectPlayer = (state) => state.login.player;
+
 export default loginSlice.reducer;
