@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectErrors } from './slice';
+import { login, selectError } from './slice';
 
 // material UI
 import {
@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = (props) => {
+const LoginPage = () => {
   const classes = useStyles();
 
   const [formValues, setFormValues] = useState(INITIAL_STATE);
 
-  const errors = useSelector(selectErrors);
+  const error = useSelector(selectError);
 
   const dispatch = useDispatch();
 
@@ -67,6 +67,8 @@ const LoginPage = (props) => {
     dispatch(login(formValues));
   };
 
+  console.log(error);
+
   return (
     <div className={classes.login}>
       <Container component="main" maxWidth="xs">
@@ -82,12 +84,14 @@ const LoginPage = (props) => {
               required
               fullWidth
               id="name"
-              label="Name"
+              label="name"
               name="name"
               autoComplete="name"
               autoFocus
               value={formValues.name}
               onChange={handleChange}
+              error={error.name ? true : false}
+              helperText={error ? error.name : null}
             />
             <TextField
               variant="outlined"
@@ -101,6 +105,8 @@ const LoginPage = (props) => {
               autoComplete="casinoServer"
               value={formValues.casinoServer}
               onChange={handleChange}
+              error={error.casinoServer ? true : false}
+              helperText={error ? error.casinoServer : null}
             />
             <TextField
               variant="outlined"
@@ -114,6 +120,8 @@ const LoginPage = (props) => {
               autoComplete="secretCode"
               value={formValues.secretCode}
               onChange={handleChange}
+              error={error.secretCode ? true : false}
+              helperText={error ? error.secretCode : null}
             />
             <Button
               type="submit"

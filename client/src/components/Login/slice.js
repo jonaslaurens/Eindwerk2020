@@ -12,12 +12,7 @@ export const login = (values) => (dispatch) => {
       dispatch(addTable(res.data.table));
     })
     .catch((err) => {
-      // set errors
-      console.log(err.response.data);
-
-      const errMsg = JSON.stringify(err.response.data);
-
-      dispatch(setErrors(errMsg));
+      dispatch(setErrors(err.response.data));
     });
 };
 
@@ -28,7 +23,7 @@ export const loginSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     player: {},
-    error: {},
+    error: '',
   },
   reducers: {
     loginSuccess: (state, { payload }) => {
@@ -48,6 +43,6 @@ export const selectFormValues = (state) => state.login.formValues;
 
 export const selectLoginState = (state) => state.login.isLoggedIn;
 
-export const selectErrors = (state) => state.login.errors;
+export const selectError = (state) => state.login.error;
 
 export default loginSlice.reducer;
