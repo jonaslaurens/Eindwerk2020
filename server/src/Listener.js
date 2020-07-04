@@ -8,7 +8,7 @@ const continueRound = require('./Actions/continueRound');
 const attachListenersToSocket = (socket, casino) => {
   let table = null;
 
-  socket.on('login', async (payload, cb) => {
+  /*   socket.on('login', async (payload, cb) => {
     console.log(payload);
 
     try {
@@ -37,7 +37,7 @@ const attachListenersToSocket = (socket, casino) => {
     } catch (error) {
       socket.emit('casino.error', error.message);
     }
-  });
+  }); */
 
   socket.on('decision', async (payload) => {
     // get current player
@@ -66,6 +66,7 @@ const attachListenersToSocket = (socket, casino) => {
     await continueRound(table, currentRound);
   });
 
+  // handle disconnect
   socket.on('disconnect', () => {
     // find user based on socket id
     // const index = casino
@@ -81,8 +82,9 @@ const attachListenersToSocket = (socket, casino) => {
 class Listener {
   constructor(io, casino) {
     io.on('connection', (socket) => {
-      console.info('A new connection was established');
+      console.info('\nA new connection was established\n');
       attachListenersToSocket(socket, casino);
+      socket.emit('connected', socket.id);
     });
   }
 }

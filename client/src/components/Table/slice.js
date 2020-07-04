@@ -21,6 +21,9 @@ export const tableSlice = createSlice({
         state.table = payload;
       }
     },
+    updateTable: (state, { payload }) => {
+      state.table.players = payload;
+    },
     checkPlayers: (state, { payload }) => {
       let difference = payload.players.filter(
         (x) => !state.table.players.includes(x)
@@ -30,7 +33,7 @@ export const tableSlice = createSlice({
   },
 });
 
-export const { addTable, checkPlayers } = tableSlice.actions;
+export const { addTable, checkPlayers, updateTable } = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;
 

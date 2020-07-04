@@ -1,5 +1,6 @@
 const Player = require('./src/Model/player/Player');
 const { isValidLogin } = require('./validation/routerValidation');
+// const Listener = require('./src/Listener');
 
 module.exports = (app, casino) => {
   // handle login
@@ -10,16 +11,26 @@ module.exports = (app, casino) => {
       return res.status(400).json(errors);
     }
 
-    const newPlayer = new Player(req.body.name);
+    const newPlayer = new Player(
+      req.body.name,
+      req.io.sockets.connected[req.body.socketId]
+    );
 
-    let result = casino.registerNewPlayer(newPlayer);
+    const result = casino.registerNewPlayer(newPlayer);
 
     const data = {
-      table: result.table.toObject(),
+      type: 'playerAdded',
+      table: result.table,
       player: result.player,
     };
 
+    const tableData = {
+      type: 'newPlayerAdded',
+      table: result.table,
+    };
+
     if (typeof data === 'object') {
+      req.io.emit('broadcast', tableData);
       return res.status(200).json(data);
     }
   });

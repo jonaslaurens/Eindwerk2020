@@ -84,7 +84,13 @@ class Table {
   toObject() {
     return {
       id: this.id,
-      players: this.players,
+      players: this.players.map((player) => {
+        return {
+          name: player.name,
+          id: player.id,
+          credits: player.credits,
+        };
+      }),
       playerLimit: this.playerLimit,
     };
   }

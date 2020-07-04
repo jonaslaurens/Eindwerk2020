@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { selectLoginState } from './components/Login/slice';
 
@@ -9,8 +9,6 @@ import LoginPage from './components/Login';
 import Table from './components/Table';
 
 const App = () => {
-  const dispatch = useDispatch();
-
   const isLoggedIn = useSelector(selectLoginState);
 
   return (

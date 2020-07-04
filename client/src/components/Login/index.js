@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectError } from './slice';
+import { login, selectError, selectSocketId } from './slice';
 
 // material UI
 import {
@@ -51,9 +51,16 @@ const LoginPage = () => {
   const [formValues, setFormValues] = useState(INITIAL_STATE);
 
   const error = useSelector(selectError);
+  const socketId = useSelector(selectSocketId);
 
   const dispatch = useDispatch();
 
+  // dirty fix to add socket to form values
+  useEffect(() => {
+    setFormValues({ ...formValues, socketId });
+  }, [formValues.secretCode]);
+
+  // handle input change
   const handleChange = (event) => {
     setFormValues({
       ...formValues,
@@ -61,9 +68,9 @@ const LoginPage = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  // handle on submit
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(login(formValues));
   };
 

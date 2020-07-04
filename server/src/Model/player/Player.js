@@ -1,9 +1,10 @@
 const generateID = require('../../Vendor/generateID');
 
 class Player {
-  constructor(name) {
+  constructor(name, socket) {
     this.name = name;
     this.id = generateID();
+    this.socket = socket;
     this.cards;
     this.credits = 0;
     this.bet = 0;
@@ -19,6 +20,14 @@ class Player {
 
   getPlayerID() {
     return this.id;
+  }
+
+  toObject() {
+    return {
+      name: this.name,
+      id: this.id,
+      credits: this.credits,
+    };
   }
 }
 

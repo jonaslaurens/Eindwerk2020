@@ -24,6 +24,7 @@ export const loginSlice = createSlice({
     isLoggedIn: false,
     player: {},
     error: '',
+    socketId: '',
   },
   reducers: {
     loginSuccess: (state, { payload }) => {
@@ -34,17 +35,20 @@ export const loginSlice = createSlice({
     setErrors: (state, { payload }) => {
       state.error = payload;
     },
+    setSocketId: (state, { payload }) => {
+      state.socketId = payload;
+    },
   },
 });
 
-export const { loginSuccess, setErrors } = loginSlice.actions;
-
-export const selectFormValues = (state) => state.login.formValues;
+export const { loginSuccess, setErrors, setSocketId } = loginSlice.actions;
 
 export const selectLoginState = (state) => state.login.isLoggedIn;
 
 export const selectError = (state) => state.login.error;
 
 export const selectPlayer = (state) => state.login.player;
+
+export const selectSocketId = (state) => state.login.socketId;
 
 export default loginSlice.reducer;
