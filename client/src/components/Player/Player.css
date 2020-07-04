@@ -5,11 +5,27 @@
 .player .avatar {
   width: 120px;
   height: 120px;
-  background-color: lightcoral;
+
   border-radius: 100%;
   position: relative;
   box-shadow: 2px 10px 0px rgba(0, 0, 0, 0.4);
   z-index: 20;
+}
+
+.player:nth-child(1) .avatar {
+  background-color: dodgerblue;
+}
+
+.player:nth-child(2) .avatar {
+  background-color: goldenrod;
+}
+
+.player:nth-child(3) .avatar {
+  background-color: crimson;
+}
+
+.player:nth-child(4) .avatar {
+  background-color: forestgreen;
 }
 
 .player .avatar:after {

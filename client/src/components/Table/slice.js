@@ -5,7 +5,9 @@ import Axios from 'axios';
 export const tableName = 'table';
 
 export const getData = (id) => (dispatch) => {
-  Axios.get(`${BASE_URL}/table/${id}`).then((res) => console.log(res.data));
+  Axios.get(`${BASE_URL}/table/${id}`).then((res) => {
+    dispatch(checkPlayers(res.data));
+  });
 };
 
 export const tableSlice = createSlice({
@@ -19,10 +21,16 @@ export const tableSlice = createSlice({
         state.table = payload;
       }
     },
+    checkPlayers: (state, { payload }) => {
+      let difference = payload.players.filter(
+        (x) => !state.table.players.includes(x)
+      );
+      state.table.players = difference;
+    },
   },
 });
 
-export const { addTable } = tableSlice.actions;
+export const { addTable, checkPlayers } = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;
 

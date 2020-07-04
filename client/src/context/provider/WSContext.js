@@ -14,59 +14,35 @@ export const WSContext = createContext();
 // socket provider
 export const WSProvider = (props) => {
   const [message, setMessage] = useState({});
-  const [errors, setErrors] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // message listener?
     socket.on('message', (payload) => {
       setMessage(payload);
     });
 
-    socket.on('casino.error', (payload) => {
-      setErrors(payload);
+    // broadcast listener?
+    socket.on('broadcast', (payload) => {
+      console.log(payload);
     });
   }, [errors]);
 
-  // const emitEvent = async (eventName, payload) => {
-  //   await socket.emit(eventName, payload, (confirmation) => {
-  //     console.log(confirmation);
-
-  //     dispatch(addPlayer(confirmation.player));
-
-  //     setMessage(confirmation);
-
-  //     if (confirmation.status && confirmation.type === 'login') {
-  //       setIsLoggedIn(!isLoggedIn);
-  //     }
-  //   });
-  // };
-
+  // set emit events here
   const emitEvent = async (eventName, payload) => {
     await socket.emit(eventName, payload);
 
     socket.on('loggedIn', (payload) => {
-      // console.log(payload);
       dispatch(addTable(payload.tableID));
     });
   };
-
-  /*   const emitEvent = async (eventName, payload) => {
-    await socket.emit(eventName, (payload) => {
-      socket.on('loggedIn', (res) => {
-        console.log(res);
-      });
-    });
-  }; */
 
   return (
     <WSContext.Provider
       value={{
         message,
         emitEvent,
-        errors,
-        isLoggedIn,
       }}
     >
       {props.children}

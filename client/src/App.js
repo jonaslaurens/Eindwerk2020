@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getData, selectId } from './components/Table/slice';
 import { selectLoginState } from './components/Login/slice';
 
 // components
@@ -11,16 +10,8 @@ import Table from './components/Table';
 
 const App = () => {
   const dispatch = useDispatch();
-  const tableId = useSelector(selectId);
-  const isLoggedIn = useSelector(selectLoginState);
 
-  useEffect(() => {
-    setInterval(() => {
-      if (tableId) {
-        dispatch(getData(tableId));
-      }
-    }, 2000);
-  }, [tableId]);
+  const isLoggedIn = useSelector(selectLoginState);
 
   return (
     <div className="App">
