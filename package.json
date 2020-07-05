@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Jonas Laurens <lauwe505@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "killpm2": "pm2 kill && pm2 kill",
+    "start": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start"
+  }
 }
