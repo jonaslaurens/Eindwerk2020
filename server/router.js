@@ -7,10 +7,12 @@ module.exports = (app, casino) => {
   app.post('/login', (req, res) => {
     const { errors, isValid } = isValidLogin(req.body);
 
+    // validate req.body
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
+    // create a new player
     const newPlayer = new Player(
       req.body.name,
       req.io.sockets.connected[req.body.socketId]
@@ -29,10 +31,15 @@ module.exports = (app, casino) => {
       table: result.table,
     };
 
-    if (typeof data === 'object') {
-      req.io.emit('broadcast', tableData);
-      return res.status(200).json(data);
-    }
+    // let socket join a room based on the table id.
+    // if the table is full we get a new id and thus
+    // a new room
+    req.io.sockets.connected[req.body.socketId].join(tableData.table.id);
+
+    // emit new table data to all sockets in the room
+    // req.io.emit('broadcast', tableData);
+    req.io.to(tableData.table.id).emit('broadcast', tableData);
+    return res.status(200).json(data);
   });
 
   // handle get table info

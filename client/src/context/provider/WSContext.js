@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useEffect, createContext } from 'react';
 import io from 'socket.io-client';
 import { BASE_URL } from '../../helpers/baseUrl';
 
@@ -24,34 +24,26 @@ export const WSProvider = (props) => {
     //handle broadcast
     socket.on('broadcast', (payload) => {
       console.log(payload);
-      /**
-       * NEW PLAYER CONNECTED
-       *
-       * update table data to all clients connected
-       */
+
       switch (payload.type) {
         case 'newPlayerAdded':
           dispatch(updateTable(payload.table.players));
           break;
+
+        // TODO: case END GAME
         default:
           console.log('something went wrong..');
       }
-
-      /**
-       * END GAME
-       *
-       * every client connected should revieve a
-       * msg who won
-       */
     });
   }, []);
 
   // set emit events here
   const emitEvent = async (eventName, payload) => {
-    // await socket.emit(eventName, payload);
-    socket.on('loggedIn', (payload) => {
-      //dispatch(addTable(payload.tableID));
-    });
+    socket.emit(eventName, payload);
+
+    /* socket.on('loggedIn', (payload) => {
+      dispatch(addTable(payload.tableID));
+    }); */
   };
 
   return (

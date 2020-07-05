@@ -20,13 +20,6 @@ const INITIAL_STATE = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  login: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    width: '100%',
-  },
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -75,72 +68,70 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={classes.login}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              value={formValues.name}
-              onChange={handleChange}
-              error={error.name ? true : false}
-              helperText={error ? error.name : null}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="casinoServer"
-              label="Casino Server"
-              type="text"
-              id="casinoServer"
-              autoComplete="casinoServer"
-              value={formValues.casinoServer}
-              onChange={handleChange}
-              error={error.casinoServer ? true : false}
-              helperText={error ? error.casinoServer : null}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="secretCode"
-              label="Secret code"
-              type="password"
-              id="secretCode"
-              autoComplete="secretCode"
-              value={formValues.secretCode}
-              onChange={handleChange}
-              error={error.secretCode ? true : false}
-              helperText={error ? error.secretCode : null}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-          </form>
-        </div>
-      </Container>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            value={formValues.name}
+            onChange={handleChange}
+            error={error.name ? true : false}
+            helperText={error ? error.name : null}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="casinoServer"
+            label="Casino Server"
+            type="text"
+            id="casinoServer"
+            autoComplete="casinoServer"
+            value={formValues.casinoServer}
+            onChange={handleChange}
+            error={error.casinoServer ? true : false}
+            helperText={error ? error.casinoServer : null}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="secretCode"
+            label="Secret code"
+            type="password"
+            id="secretCode"
+            autoComplete="secretCode"
+            value={formValues.secretCode}
+            onChange={handleChange}
+            error={error.secretCode ? true : false}
+            helperText={error ? error.secretCode : null}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+        </form>
+      </div>
+    </Container>
   );
 };
 

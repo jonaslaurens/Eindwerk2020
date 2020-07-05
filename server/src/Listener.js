@@ -40,10 +40,15 @@ const attachListenersToSocket = (socket, casino) => {
   }); */
 
   socket.on('decision', async (payload) => {
+    console.log(payload);
+
+    // get current table based on payload.table -> contains the table id
+
     // get current player
     const { player, index } = getCurrentPlayer(table, socket);
-
     console.info(`${player.name} will ${payload.decision}`);
+
+    return;
 
     // get the current round
     const currentRound = table.getRound();
