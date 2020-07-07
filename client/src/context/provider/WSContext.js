@@ -28,15 +28,12 @@ export const WSProvider = (props) => {
 
     //handle broadcast
     socket.on('broadcast', (payload) => {
-      console.log(payload);
-
       switch (payload.type) {
         case 'newPlayerAdded':
-          console.log(payload);
-
-          if (payload.hasOwnProperty('players')) {
+          if (payload.table.hasOwnProperty('players')) {
             dispatch(updateTable(payload.table.players));
           }
+
           break;
 
         // TODO: case END GAME

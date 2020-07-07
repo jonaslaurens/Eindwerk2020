@@ -57,6 +57,8 @@ export const selectError = (state) => state.login.error;
 
 export const selectPlayer = (state) => state.login.player;
 
+export const selectPlayerId = (state) => state.login.player.id;
+
 export const selectSocketId = (state) => state.login.socketId;
 
 export default loginSlice.reducer;

@@ -17,11 +17,13 @@ export const tableSlice = createSlice({
   },
   reducers: {
     addTable: (state, { payload }) => {
-      if (state.table.id !== payload) {
-        state.table = payload;
-      }
+      console.log(payload);
+
+      state.table = payload;
     },
     updateTable: (state, { payload }) => {
+      console.log(payload);
+
       state.table.players = payload;
     },
     checkPlayers: (state, { payload }) => {
@@ -37,6 +39,6 @@ export const { addTable, checkPlayers, updateTable } = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;
 
-export const selectId = (state) => state.table.table.id;
+export const selectTableId = (state) => state.table.table.id;
 
 export default tableSlice.reducer;

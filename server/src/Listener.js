@@ -6,7 +6,18 @@ const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
 const attachListenersToSocket = (socket, casino) => {
-  let table = null;
+  // socket.on('tableInfo', (payload) => {
+  //   const table = casino.getTable(payload.tableId);
+
+  //   const data = {
+  //     type: 'newPlayerAdded',
+  //     table: table.toObject(payload.playerId),
+  //   };
+
+  //   console.log(data);
+
+  //   return socket.emit('broadcast', data);
+  // });
 
   /*   socket.on('login', async (payload, cb) => {
     console.log(payload);

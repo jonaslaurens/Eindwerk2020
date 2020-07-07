@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectId } from '../Table/slice';
+import { selectTableId } from '../Table/slice';
 
 import { Button } from '@material-ui/core';
 
@@ -11,7 +11,7 @@ import { WSContext } from '../../context/provider/WSContext';
 
 const Decisions = () => {
   const { emitEvent } = useContext(WSContext);
-  const tableId = useSelector(selectId);
+  const tableId = useSelector(selectTableId);
 
   const handleClick = (action) => {
     const decision = {

@@ -26,18 +26,23 @@ module.exports = (app, casino) => {
       player: result.player,
     };
 
-    const tableData = {
-      type: 'newPlayerAdded',
-      table: result.table,
-    };
+    // get table
+    const table = casino.getTable(result.table.id);
+
+    table.broadcast(req.io, result.player.id);
+
+    // const tableData = {
+    //   type: 'newPlayerAdded',
+    //   table: result.table,
+    // };
 
     // have the socket join a room based on the table id.
     // if the table is full we get a new id and thus
     // a new room will be created
-    req.io.sockets.connected[req.body.socketId].join(tableData.table.id);
+    req.io.sockets.connected[req.body.socketId].join(data.table.id);
 
     // emit new table data to all sockets in the room
-    req.io.to(tableData.table.id).emit('broadcast', tableData);
+    //req.io.to(tableData.table.id).emit('broadcast', tableData);
 
     res.status(200).json(data);
 

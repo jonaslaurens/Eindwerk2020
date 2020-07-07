@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectTable } from '../Table/slice';
+import { selectTable } from './slice';
 import { selectPlayer } from '../Login/slice';
+
+import { WSContext } from '../../context/provider/WSContext';
 
 import './Table.css';
 
@@ -15,7 +17,20 @@ const Table = () => {
   const table = useSelector(selectTable);
   const player = useSelector(selectPlayer);
 
+  // const { emitEvent } = useContext(WSContext);
+
   const [index, setIndex] = useState(1);
+
+  /*   useEffect(() => {
+    if (table.id) {
+      const data = {
+        tableId: table.id,
+        playerId: player.id,
+      };
+
+      emitEvent('tableInfo', data);
+    }
+  }, [table.id]); */
 
   return (
     <>
