@@ -3,6 +3,8 @@ const Player = require('../player/Player');
 const Round = require('../round/Round');
 const handleDecider = require('../../Helpers/handleDecider');
 
+const Dealer = require('../dealer/Dealer');
+
 class Table {
   constructor(playerLimit) {
     this.id = generateID();
@@ -24,6 +26,18 @@ class Table {
 
     // start on next player every new round
     this.previousStarter = 0;
+  }
+
+  getCards() {
+    const dealer = new Dealer();
+
+    const player = dealer.dealAmountOfCards(2);
+    const community = dealer.dealAmountOfCards(5);
+
+    return {
+      player,
+      community,
+    };
   }
 
   hasAvailableSpots() {
@@ -59,9 +73,9 @@ class Table {
   // start a game
   startGame() {
     // check if we have enough players
-    // if (this.players.length <= 1) {
-    //   throw new TypeError('Not enough players to start the game');
-    // }
+    if (this.players.length <= 1) {
+      throw new TypeError('Not enough players to start the game');
+    }
 
     // check if there is a round in progress
     if (this.currentRound) {
@@ -81,17 +95,24 @@ class Table {
     );
   }
 
-  toObject() {
+  toObject(playerId) {
+    if (this.players.length === 1) {
+      return {
+        id: this.id,
+      };
+    }
+
     return {
       id: this.id,
-      players: this.players.map((player) => {
-        return {
-          name: player.name,
-          id: player.id,
-          credits: player.credits,
-        };
-      }),
-      playerLimit: this.playerLimit,
+      players: this.players
+        .filter((player) => player.id !== playerId)
+        .map((player) => {
+          return {
+            name: player.name,
+            id: player.id,
+            credits: player.credits,
+          };
+        }),
     };
   }
 }

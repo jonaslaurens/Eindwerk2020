@@ -1,9 +1,19 @@
 import React from 'react';
 
-const Card = () => {
+import './Card.css';
+
+const Card = ({ value, suit, player }) => {
+  if (!player) {
+    return <div className="card back"></div>;
+  }
+
   return (
-    <div>
-      <h6>Card</h6>
+    <div className="card">
+      <h6>{value}</h6>
+      <div
+        className={`suit ${suit.toLowerCase()} suit-${suit.toLowerCase()} `}
+      ></div>
+      <h6>{value}</h6>
     </div>
   );
 };

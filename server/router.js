@@ -41,12 +41,12 @@ module.exports = (app, casino) => {
 
     res.status(200).json(data);
 
-    // try starting a game?
-
+    // WARN: TESTING
     // get table
-    const table = casino.getTable(result.table.id);
+    // const table = casino.getTable(result.table.id);
 
-    table.startGame();
+    // table.startGame();
+    // WARN: TESTING END
     return;
 
     // return res.status(200).json(data);

@@ -20,7 +20,7 @@ class Casino {
 
     console.info(`player: ${player.name} added to table`);
 
-    return { table: table.toObject(), player: player.toObject() };
+    return { table: table.toObject(player.id), player: player.toObject() };
   }
 
   // returns a table based on it's id if it exists

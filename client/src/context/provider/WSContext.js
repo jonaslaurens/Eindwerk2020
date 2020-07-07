@@ -32,7 +32,11 @@ export const WSProvider = (props) => {
 
       switch (payload.type) {
         case 'newPlayerAdded':
-          dispatch(updateTable(payload.table.players));
+          console.log(payload);
+
+          if (payload.hasOwnProperty('players')) {
+            dispatch(updateTable(payload.table.players));
+          }
           break;
 
         // TODO: case END GAME
