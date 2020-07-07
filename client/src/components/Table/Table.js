@@ -5,9 +5,9 @@ import { selectTable } from '../Table/slice';
 
 import './Table.css';
 
-import Player from '../Player/index';
+import Player from '../Player/Player';
 import Decisions from '../Decisions/Decisions';
-import Alerter from '../Alerter';
+import Alerter from '../Alerter/Alerter';
 
 const Table = () => {
   const table = useSelector(selectTable);

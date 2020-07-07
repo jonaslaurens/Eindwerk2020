@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { selectLoginState } from './components/Login/slice';
 
 // components
-import LoginPage from './components/Login';
-import Table from './components/Table';
+import Login from './components/Login/Login';
+import Table from './components/Table/Table';
 
 const App = () => {
   const isLoggedIn = useSelector(selectLoginState);
@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div className="App">
       {/* <Table /> */}
-      {!isLoggedIn ? <LoginPage /> : <Table />}
+      {!isLoggedIn ? <Login /> : <Table />}
     </div>
   );
 };

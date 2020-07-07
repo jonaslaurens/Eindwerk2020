@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+const Login = () => {
   const classes = useStyles();
 
   const [formValues, setFormValues] = useState(INITIAL_STATE);
@@ -135,4 +135,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
