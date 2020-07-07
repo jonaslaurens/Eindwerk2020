@@ -34,8 +34,12 @@ class Round {
 
   // initiates the round dealing cards to all players and community cards
   initRound() {
-    this.players.forEach(player => {
-      player.cards = this.dealer.dealAmountOfCards(2);
+    this.players.forEach((player) => {
+      const handCards = this.dealer.dealAmountOfCards(2);
+      // store player cards on player object
+      player.cards = handCards;
+      // send player card to players socket
+      player.socket.emit('handCards', handCards);
     });
 
     this.communityCards = this.dealer.dealAmountOfCards(5);
@@ -76,7 +80,7 @@ class Round {
       actions: any,
       cards: currentPlayer.cards,
       credits: currentPlayer.credits,
-      communityCards: this.communityCards
+      communityCards: this.communityCards,
     });
   }
 

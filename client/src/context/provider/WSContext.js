@@ -4,7 +4,7 @@ import { BASE_URL } from '../../helpers/baseUrl';
 
 import { useDispatch } from 'react-redux';
 
-import { setSocketId } from '../../components/Login/slice';
+import { setSocketId, setCards } from '../../components/Login/slice';
 import { updateTable } from '../../components/Table/slice';
 
 // init socket
@@ -19,6 +19,11 @@ export const WSProvider = (props) => {
   useEffect(() => {
     socket.on('connected', (payload) => {
       dispatch(setSocketId(payload));
+    });
+
+    socket.on('handCards', (payload) => {
+      console.log(payload);
+      dispatch(setCards(payload));
     });
 
     //handle broadcast

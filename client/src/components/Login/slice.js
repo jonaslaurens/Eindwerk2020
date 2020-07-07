@@ -38,10 +38,18 @@ export const loginSlice = createSlice({
     setSocketId: (state, { payload }) => {
       state.socketId = payload;
     },
+    setCards: (state, { payload }) => {
+      state.player.cards = payload;
+    },
   },
 });
 
-export const { loginSuccess, setErrors, setSocketId } = loginSlice.actions;
+export const {
+  loginSuccess,
+  setErrors,
+  setSocketId,
+  setCards,
+} = loginSlice.actions;
 
 export const selectLoginState = (state) => state.login.isLoggedIn;
 

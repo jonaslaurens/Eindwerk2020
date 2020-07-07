@@ -59,9 +59,9 @@ class Table {
   // start a game
   startGame() {
     // check if we have enough players
-    if (this.players.length <= 1) {
-      throw new TypeError('Not enough players to start the game');
-    }
+    // if (this.players.length <= 1) {
+    //   throw new TypeError('Not enough players to start the game');
+    // }
 
     // check if there is a round in progress
     if (this.currentRound) {

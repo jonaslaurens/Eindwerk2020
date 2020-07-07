@@ -31,15 +31,25 @@ module.exports = (app, casino) => {
       table: result.table,
     };
 
-    // let socket join a room based on the table id.
+    // have the socket join a room based on the table id.
     // if the table is full we get a new id and thus
-    // a new room
+    // a new room will be created
     req.io.sockets.connected[req.body.socketId].join(tableData.table.id);
 
     // emit new table data to all sockets in the room
-    // req.io.emit('broadcast', tableData);
     req.io.to(tableData.table.id).emit('broadcast', tableData);
-    return res.status(200).json(data);
+
+    res.status(200).json(data);
+
+    // try starting a game?
+
+    // get table
+    const table = casino.getTable(result.table.id);
+
+    table.startGame();
+    return;
+
+    // return res.status(200).json(data);
   });
 
   // handle get table info

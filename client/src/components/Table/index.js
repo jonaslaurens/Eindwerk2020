@@ -6,7 +6,7 @@ import { selectTable } from '../Table/slice';
 import './Table.css';
 
 import Player from '../Player/index';
-import Decisions from '../Decisions';
+import Decisions from '../Decisions/Decisions';
 import Alerter from '../Alerter';
 
 const Table = () => {
