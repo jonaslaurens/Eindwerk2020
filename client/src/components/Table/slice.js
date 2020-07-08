@@ -17,13 +17,9 @@ export const tableSlice = createSlice({
   },
   reducers: {
     addTable: (state, { payload }) => {
-      console.log(payload);
-
       state.table = payload;
     },
     updateTable: (state, { payload }) => {
-      console.log(payload);
-
       state.table.players = payload;
     },
     checkPlayers: (state, { payload }) => {
@@ -31,6 +27,9 @@ export const tableSlice = createSlice({
         (x) => !state.table.players.includes(x)
       );
       state.table.players = difference;
+    },
+    setCommunityCards: (state, { payload }) => {
+      state.table.communityCards = payload;
     },
   },
 });

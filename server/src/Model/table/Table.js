@@ -95,7 +95,7 @@ class Table {
     );
   }
 
-  broadcast(io, playerId) {
+  broadcast(playerId) {
     if (this.players.length === 1) return;
 
     this.players.forEach((player) => {
@@ -118,8 +118,29 @@ class Table {
         player.socket.emit('broadcast', data);
       }
     });
+  }
 
-    //io.to(this.id).emit('broadcast', data);
+  broadcast() {
+    if (this.players.length === 1) return;
+
+    this.players.forEach((player) => {
+      const data = {
+        type: 'newPlayerAdded',
+        table: {
+          id: this.id,
+          players: this.players
+            .filter((currentPlayer) => currentPlayer.id !== player.id)
+            .map((player) => {
+              return {
+                name: player.name,
+                id: player.id,
+                credits: player.credits,
+              };
+            }),
+        },
+      };
+      player.socket.emit('broadcast', data);
+    });
   }
 
   toObject(playerId) {

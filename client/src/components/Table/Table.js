@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 import { selectTable } from './slice';
 import { selectPlayer } from '../Login/slice';
 
-import { WSContext } from '../../context/provider/WSContext';
-
 import './Table.css';
 
 import Player from '../Player/Player';
@@ -15,22 +13,7 @@ import Card from '../Card/Card';
 
 const Table = () => {
   const table = useSelector(selectTable);
-  const player = useSelector(selectPlayer);
-
-  // const { emitEvent } = useContext(WSContext);
-
-  const [index, setIndex] = useState(1);
-
-  /*   useEffect(() => {
-    if (table.id) {
-      const data = {
-        tableId: table.id,
-        playerId: player.id,
-      };
-
-      emitEvent('tableInfo', data);
-    }
-  }, [table.id]); */
+  const selectedPlayer = useSelector(selectPlayer);
 
   return (
     <>
@@ -46,11 +29,11 @@ const Table = () => {
         </div>
         <div className="players">
           {/* render player -> get info from login*/}
-          <Player {...player} key={player.id} index={index} />
+          <Player {...selectedPlayer} key={selectedPlayer.id} index={1} />
           {/* render rest of the players -> get info from table*/}
           {table.hasOwnProperty('players')
             ? table.players.map((player, index) => (
-                <Player {...player} key={player.id} index={2} />
+                <Player {...player} key={player.id} index={index + 2} />
               ))
             : null}
         </div>

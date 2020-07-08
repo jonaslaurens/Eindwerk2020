@@ -42,6 +42,7 @@ class Round {
       player.socket.emit('handCards', handCards);
     });
 
+    // send community cards to all sockets (can be room broadcast)
     this.communityCards = this.dealer.dealAmountOfCards(5);
 
     this.askDecision();

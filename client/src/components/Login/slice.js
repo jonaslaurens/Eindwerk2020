@@ -10,6 +10,20 @@ export const login = (values) => (dispatch) => {
     .then((res) => {
       dispatch(loginSuccess(res.data.player));
       dispatch(addTable(res.data.table));
+      dispatch(
+        setCards({
+          handCards: [
+            {
+              value: 10,
+              suit: 'Hearts',
+            },
+            {
+              value: 9,
+              suit: 'Hearts',
+            },
+          ],
+        })
+      );
     })
     .catch((err) => {
       dispatch(setErrors(err.response.data));
@@ -39,7 +53,7 @@ export const loginSlice = createSlice({
       state.socketId = payload;
     },
     setCards: (state, { payload }) => {
-      state.player.cards = payload;
+      state.player.cards = payload.handCards;
     },
   },
 });
@@ -58,6 +72,8 @@ export const selectError = (state) => state.login.error;
 export const selectPlayer = (state) => state.login.player;
 
 export const selectPlayerId = (state) => state.login.player.id;
+
+export const selectPlayerCards = (state) => state.login.player.cards;
 
 export const selectSocketId = (state) => state.login.socketId;
 
