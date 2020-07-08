@@ -12,11 +12,10 @@ module.exports = (app, casino) => {
       return res.status(400).json(errors);
     }
 
+    const connectedSocket = req.io.sockets.connected[req.body.socketId];
+
     // create a new player
-    const newPlayer = new Player(
-      req.body.name,
-      req.io.sockets.connected[req.body.socketId]
-    );
+    const newPlayer = new Player(req.body.name, connectedSocket);
 
     const result = casino.registerNewPlayer(newPlayer);
 
@@ -35,16 +34,14 @@ module.exports = (app, casino) => {
     // have the socket join a room based on the table id.
     // if the table is full we get a new id and thus
     // a new room will be created
-    req.io.sockets.connected[req.body.socketId].join(data.table.id);
+    connectedSocket.join(data.table.id);
 
+    // send initial data to connected client
     res.status(200).json(data);
 
-    // WARN: TESTING
-    // get table
-    // const table = casino.getTable(result.table.id);
+    // // try starting a game
+    table.startGame(req.io, connectedSocket);
 
-    // table.startGame();
-    // WARN: TESTING END
     return;
 
     // return res.status(200).json(data);

@@ -71,22 +71,31 @@ class Table {
   }
 
   // start a game
-  startGame() {
+  startGame(io, socket) {
     // check if we have enough players
     if (this.players.length <= 1) {
-      throw new TypeError('Not enough players to start the game');
+      return socket.emit('casinoError', {
+        msg: 'Not enough players to start the game',
+      });
     }
 
     // check if there is a round in progress
     if (this.currentRound) {
-      throw new TypeError('Round in progress, new one will begin shortly');
+      return socket.emit('casinoError', {
+        msg: 'Round in progress, new one will begin shortly',
+      });
     }
 
     // create new array of our players that are gonna play a game
     const playingPlayers = this.players.map((player) => player);
 
     // start new round with current players
-    this.currentRound = new Round(playingPlayers, this.previousStarter);
+    this.currentRound = new Round(
+      playingPlayers,
+      this.previousStarter,
+      io,
+      this.id
+    );
 
     // handle previous starter so we allways have a new first decider
     this.previousStarter = handleDecider(

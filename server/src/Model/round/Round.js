@@ -3,7 +3,7 @@ const { any } = require('../../Constants/playerActions');
 const handleDecider = require('../../Helpers/handleDecider');
 
 class Round {
-  constructor(players, decider) {
+  constructor(players, decider, io, tableId) {
     // holds all active players
     this.players = players;
 
@@ -28,6 +28,10 @@ class Round {
     // holds the players bets
     this.playerBets = [];
 
+    this.io = io;
+
+    this.tableId = tableId;
+
     // initiates a round
     this.initRound();
   }
@@ -44,6 +48,13 @@ class Round {
 
     // send community cards to all sockets (can be room broadcast)
     this.communityCards = this.dealer.dealAmountOfCards(5);
+
+    const data = {
+      type: 'communityCards',
+      cards: this.communityCards,
+    };
+
+    this.io.to(this.tableId).emit('broadcast', data);
 
     this.askDecision();
   }

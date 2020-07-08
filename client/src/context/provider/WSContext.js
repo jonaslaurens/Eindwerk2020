@@ -4,8 +4,15 @@ import { BASE_URL } from '../../helpers/baseUrl';
 
 import { useDispatch } from 'react-redux';
 
-import { setSocketId, setCards } from '../../components/Login/loginSlice';
-import { updateTable } from '../../components/Table/tableSlice';
+import {
+  setSocketId,
+  setCards,
+  setErrors,
+} from '../../components/Login/loginSlice';
+import {
+  updateTable,
+  setCommunityCards,
+} from '../../components/Table/tableSlice';
 
 // init socket
 const socket = io(BASE_URL);
@@ -22,18 +29,28 @@ export const WSProvider = (props) => {
     });
 
     socket.on('handCards', (payload) => {
-      console.log(payload);
       dispatch(setCards(payload));
     });
 
-    //handle broadcast
+    socket.on('casinoError', (payload) => {
+      dispatch(setErrors(payload));
+    });
+
+    //handle broadcast emits
     socket.on('broadcast', (payload) => {
       switch (payload.type) {
+        // handle new player added
         case 'newPlayerAdded':
           if (payload.table.hasOwnProperty('players')) {
+            dispatch(setErrors(''));
             dispatch(updateTable(payload.table.players));
+            socket.emit('startGame', payload.table.id);
           }
+          break;
 
+        // handle community cards
+        case 'communityCards':
+          dispatch(setCommunityCards(payload.cards));
           break;
 
         // TODO: case END GAME

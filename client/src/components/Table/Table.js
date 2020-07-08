@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectTable } from './tableSlice';
-import { selectPlayer } from '../Login/loginSlice';
+import { selectPlayer, selectError } from '../Login/loginSlice';
 
 import './Table.css';
 
@@ -14,23 +14,27 @@ import Card from '../Card/Card';
 const Table = () => {
   const table = useSelector(selectTable);
   const selectedPlayer = useSelector(selectPlayer);
+  const error = useSelector(selectError);
+
+  const renderCommunityCards = () => {
+    if (table.hasOwnProperty('communityCards')) {
+      return table.communityCards.map((card) => (
+        <Card
+          key={card.value + card.suit}
+          value={card.value}
+          suit={card.suit}
+        />
+      ));
+    }
+  };
 
   return (
     <>
-      <Alerter type="info" msg="Waiting for more players" />
+      {error && <Alerter type="info" msg={error.msg} />}
       <div className="table">
-        <div className="cards">
-          {/* render community cards from table */}
-          <Card value="10" suit="Hearts" />
-          <Card value="J" suit="Hearts" />
-          <Card value="Q" suit="Hearts" />
-          <Card value="K" suit="Hearts" />
-          <Card value="A" suit="Hearts" />
-        </div>
+        <div className="cards">{renderCommunityCards()}</div>
         <div className="players">
-          {/* render player -> get info from login*/}
           <Player {...selectedPlayer} key={selectedPlayer.id} index={1} />
-          {/* render rest of the players -> get info from table*/}
           {table.hasOwnProperty('players')
             ? table.players.map((player, index) => (
                 <Player {...player} key={player.id} index={index + 2} />

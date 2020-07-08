@@ -34,7 +34,12 @@ export const tableSlice = createSlice({
   },
 });
 
-export const { addTable, checkPlayers, updateTable } = tableSlice.actions;
+export const {
+  addTable,
+  checkPlayers,
+  updateTable,
+  setCommunityCards,
+} = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;
 
