@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { useSelector } from 'react-redux';
 
-import { selectLoginState } from './components/Login/slice';
+import { selectLoginState } from './components/Login/loginSlice';
 
 // components
 import Login from './components/Login/Login';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectError, selectSocketId } from './slice';
+import { login, selectError, selectSocketId } from './loginSlice';
 
 // material UI
 import {

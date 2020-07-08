@@ -4,8 +4,8 @@ import { BASE_URL } from '../../helpers/baseUrl';
 
 import { useDispatch } from 'react-redux';
 
-import { setSocketId, setCards } from '../../components/Login/slice';
-import { updateTable } from '../../components/Table/slice';
+import { setSocketId, setCards } from '../../components/Login/loginSlice';
+import { updateTable } from '../../components/Table/tableSlice';
 
 // init socket
 const socket = io(BASE_URL);

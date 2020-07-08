@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../helpers/baseUrl';
 
-import { addTable } from '../Table/slice';
+import { addTable } from '../Table/tableSlice';
 
 import Axios from 'axios';
 

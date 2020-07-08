@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectTableId } from '../Table/slice';
+import { selectTableId } from '../Table/tableSlice';
 
 import { Button } from '@material-ui/core';
 

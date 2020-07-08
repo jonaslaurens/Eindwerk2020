@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectTable } from './slice';
-import { selectPlayer } from '../Login/slice';
+import { selectTable } from './tableSlice';
+import { selectPlayer } from '../Login/loginSlice';
 
 import './Table.css';
 
