@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectTableId } from '../Table/tableSlice';
+import { setDecision } from '../../components/Login/loginSlice';
 
 import { Button } from '@material-ui/core';
 
@@ -11,16 +12,18 @@ import { WSContext } from '../../context/provider/WSContext';
 
 const Decisions = () => {
   const { emitEvent } = useContext(WSContext);
+  const dispatch = useDispatch();
   const tableId = useSelector(selectTableId);
 
   const handleClick = (action) => {
     const decision = {
       table: tableId,
       decision: action,
-      amount: 100,
+      amount: action === 'raise' ? 100 : '',
     };
     // handle it
     emitEvent('decision', decision);
+    dispatch(setDecision(false));
   };
 
   return (

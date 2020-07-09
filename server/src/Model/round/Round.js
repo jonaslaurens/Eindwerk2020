@@ -90,9 +90,6 @@ class Round {
 
     currentPlayer.socket.emit('decision', {
       actions: any,
-      cards: currentPlayer.cards,
-      credits: currentPlayer.credits,
-      communityCards: this.communityCards,
     });
   }
 

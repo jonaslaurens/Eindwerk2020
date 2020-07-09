@@ -42,7 +42,9 @@ const Table = () => {
             : null}
         </div>
       </div>
-      <Decisions />
+      {selectedPlayer.decisions && (
+        <Decisions decisions={selectedPlayer.decisions} />
+      )}
     </>
   );
 };

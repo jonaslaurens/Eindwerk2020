@@ -8,6 +8,7 @@ import {
   setSocketId,
   setCards,
   setErrors,
+  setDecision,
 } from '../../components/Login/loginSlice';
 import {
   updateTable,
@@ -34,6 +35,11 @@ export const WSProvider = (props) => {
 
     socket.on('casinoError', (payload) => {
       dispatch(setErrors(payload));
+    });
+
+    socket.on('decision', (payload) => {
+      console.log(payload);
+      dispatch(setDecision(payload));
     });
 
     //handle broadcast emits
