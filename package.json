@@ -6,6 +6,8 @@
   "license": "MIT",
   "scripts": {
     "killpm2": "pm2 kill && pm2 kill",
-    "start": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start"
+    "start": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start",
+    "start-build": "cd server && yarn start && cd .. && cd client && yarn start",
+    "dev": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start"
   }
 }
