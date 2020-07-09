@@ -1,4 +1,4 @@
-module.exports = validateParams = params => {
+module.exports = validateParams = (params) => {
   // params have to be of type Object, cannot be null or undefined
   if (typeof params !== 'object' || params === null || params === undefined)
     return false;
@@ -14,7 +14,7 @@ module.exports = validateParams = params => {
   // TODO: needs more work.. ik moet elke key na kijken maar geeft niet gewenste resultaat weer..
   let check = true;
 
-  params.forEach(element => {
+  params.forEach((element) => {
     if (!element.hasOwnProperty('value') || !element.hasOwnProperty('suit')) {
       return (check = false);
     }
@@ -23,7 +23,7 @@ module.exports = validateParams = params => {
     if (typeof element.suit !== 'string') return (check = false);
   });
 
-  if (check === false) return false;
+  if (!check) return false;
 
   return true;
 };
