@@ -6,51 +6,10 @@ const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
 const attachListenersToSocket = (socket, casino) => {
-  // socket.on('tableInfo', (payload) => {
-  //   const table = casino.getTable(payload.tableId);
+  // try starting a game
+  socket.on('startGame', (payload) => {});
 
-  //   const data = {
-  //     type: 'newPlayerAdded',
-  //     table: table.toObject(payload.playerId),
-  //   };
-
-  //   console.log(data);
-
-  //   return socket.emit('broadcast', data);
-  // });
-
-  /*   socket.on('login', async (payload, cb) => {
-    console.log(payload);
-
-    try {
-      table = await addPlayer(payload, casino, socket);
-
-      socket.emit('loggedIn', {
-        type: 'login',
-        status: true,
-        msg: 'Welcome to our casino',
-        player: payload.name,
-        tableID: table.id,
-        // players: table.players,
-      });
-      // cb({
-      //   type: 'login',
-      //   status: true,
-      //   msg: 'Welcome to our casino',
-      //   player: payload.name,
-      //   table: table,
-      // });
-
-      // if we added a player try starting a game
-      if (table) {
-        table.startGame();
-      }
-    } catch (error) {
-      socket.emit('casino.error', error.message);
-    }
-  }); */
-
-  socket.on('decision', async (payload) => {
+  socket.on('decision', (payload) => {
     console.log(payload);
 
     // get current table based on payload.table -> contains the table id
@@ -67,19 +26,19 @@ const attachListenersToSocket = (socket, casino) => {
     // handle decision
     switch (payload.decision) {
       case 'call':
-        await handleCall(currentRound, player, index);
+        handleCall(currentRound, player, index);
         break;
 
       case 'raise':
-        await handleRaise(currentRound, player, index, payload.amount);
+        handleRaise(currentRound, player, index, payload.amount);
         break;
 
       case 'fold':
-        await handleFold(currentRound, index);
+        handleFold(currentRound, index);
         break;
     }
 
-    await continueRound(table, currentRound);
+    continueRound(table, currentRound);
   });
 
   // handle disconnect

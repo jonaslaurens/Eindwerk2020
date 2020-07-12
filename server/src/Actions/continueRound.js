@@ -45,6 +45,8 @@ const continueRound = async (table, round) => {
     // reset round
     table.currentRound = null;
 
+    console.log(table);
+
     // try starting new game
     table.startGame();
 

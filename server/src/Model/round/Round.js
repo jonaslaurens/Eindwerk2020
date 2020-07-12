@@ -49,12 +49,10 @@ class Round {
     // send community cards to all sockets (can be room broadcast)
     this.communityCards = this.dealer.dealAmountOfCards(5);
 
-    const data = {
+    this.io.to(this.tableId).emit('broadcast', {
       type: 'communityCards',
       cards: this.communityCards,
-    };
-
-    this.io.to(this.tableId).emit('broadcast', data);
+    });
 
     this.askDecision();
   }
