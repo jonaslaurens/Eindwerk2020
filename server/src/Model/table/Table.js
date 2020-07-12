@@ -137,7 +137,9 @@ class Table {
   }
 
   broadcast() {
-    if (this.players.length === 1) return;
+    if (this.players.length === 1) {
+      return this.players[0].socket.emit('seated', this.id);
+    }
 
     this.players.forEach((player) => {
       const data = {

@@ -38,8 +38,13 @@ export const WSProvider = (props) => {
     });
 
     socket.on('decision', (payload) => {
-      console.log(payload);
       dispatch(setDecision(payload));
+    });
+
+    socket.on('seated', (payload) => {
+      // when player is given a seat at a table
+      // try starting a game
+      socket.emit('startGame', payload);
     });
 
     //handle broadcast emits
