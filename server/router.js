@@ -40,7 +40,7 @@ module.exports = (app, casino) => {
     res.status(200).json(data);
 
     // // try starting a game
-    table.startGame(req.io, connectedSocket);
+    // table.startGame(req.io, connectedSocket);
 
     return;
 

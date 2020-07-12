@@ -7,7 +7,12 @@ const continueRound = require('./Actions/continueRound');
 
 const attachListenersToSocket = (socket, casino) => {
   // try starting a game
-  socket.on('startGame', (payload) => {});
+  socket.on('startGame', (payload) => {
+    // get our table
+    const table = casino.getTable(payload);
+
+    table.startGame(socket);
+  });
 
   socket.on('decision', (payload) => {
     console.log(payload);

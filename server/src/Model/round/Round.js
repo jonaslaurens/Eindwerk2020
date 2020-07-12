@@ -3,7 +3,7 @@ const { any } = require('../../Constants/playerActions');
 const handleDecider = require('../../Helpers/handleDecider');
 
 class Round {
-  constructor(players, decider, io, tableId) {
+  constructor(players, decider, tableId) {
     // holds all active players
     this.players = players;
 
@@ -28,7 +28,7 @@ class Round {
     // holds the players bets
     this.playerBets = [];
 
-    this.io = io;
+    // this.io = io;
 
     this.tableId = tableId;
 
@@ -37,6 +37,26 @@ class Round {
   }
 
   // initiates the round dealing cards to all players and community cards
+  // initRound() {
+  //   this.players.forEach((player) => {
+  //     const handCards = this.dealer.dealAmountOfCards(2);
+  //     // store player cards on player object
+  //     player.cards = handCards;
+  //     // send player card to players socket
+  //     player.socket.emit('handCards', handCards);
+  //   });
+
+  //   // send community cards to all sockets (can be room broadcast)
+  //   this.communityCards = this.dealer.dealAmountOfCards(5);
+
+  //   this.io.to(this.tableId).emit('broadcast', {
+  //     type: 'communityCards',
+  //     cards: this.communityCards,
+  //   });
+
+  //   this.askDecision();
+  // }
+
   initRound() {
     this.players.forEach((player) => {
       const handCards = this.dealer.dealAmountOfCards(2);
@@ -49,7 +69,14 @@ class Round {
     // send community cards to all sockets (can be room broadcast)
     this.communityCards = this.dealer.dealAmountOfCards(5);
 
-    this.io.to(this.tableId).emit('broadcast', {
+    // dirty fix
+
+    this.players[0].socket.emit('broadcast', {
+      type: 'communityCards',
+      cards: this.communityCards,
+    });
+
+    this.players[0].socket.to(this.tableId).emit('broadcast', {
       type: 'communityCards',
       cards: this.communityCards,
     });
