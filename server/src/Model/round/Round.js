@@ -70,7 +70,6 @@ class Round {
     this.communityCards = this.dealer.dealAmountOfCards(5);
 
     // dirty fix
-
     this.players[0].socket.emit('broadcast', {
       type: 'communityCards',
       cards: this.communityCards,

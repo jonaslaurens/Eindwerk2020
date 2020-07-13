@@ -49,6 +49,7 @@ const attachListenersToSocket = (socket, casino) => {
   // handle disconnect
   socket.on('disconnect', () => {
     // find user based on socket id
+    // remove user from table
     // const index = casino
     //   .getTable()
     //   .players.findIndex((player) => player.socket.id === socket.id);

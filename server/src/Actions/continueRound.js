@@ -7,7 +7,7 @@ const getCurrentPlayer = require('../Helpers/getCurrentPlayer');
 const logStuff = require('../../helpers/logStuff');
 let gameNumber = 0;
 
-const continueRound = async (table, round) => {
+const continueRound = (table, round) => {
   const { players, communityCards } = round;
 
   // handle the end of the game
@@ -32,10 +32,12 @@ const continueRound = async (table, round) => {
 
     table.players.forEach((player) => console.log(player.credits));
 
+    // send new credits to players
+
     // send msg to winner
     winner.socket.emit('endgame', { message: 'You Won!' });
 
-    // send message to everyone declaring who won
+    // send message to only losers who won
     table.getSockets().forEach((socket) =>
       socket.emit('broadcast', {
         message: `${winner.name} won with a ${winner.result.name}`,
@@ -45,17 +47,15 @@ const continueRound = async (table, round) => {
     // reset round
     table.currentRound = null;
 
-    console.log(table);
-
     // try starting new game
     table.startGame();
 
     return;
   }
 
-  await round.handleCurrentDecider();
+  round.handleCurrentDecider();
 
-  await round.askDecision();
+  round.askDecision();
 };
 
 module.exports = continueRound;

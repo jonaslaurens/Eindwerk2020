@@ -71,13 +71,8 @@ export const WSProvider = (props) => {
     });
   }, []);
 
-  // set emit events here
-  const emitEvent = async (eventName, payload) => {
+  const emitEvent = (eventName, payload) => {
     socket.emit(eventName, payload);
-
-    /* socket.on('loggedIn', (payload) => {
-      dispatch(addTable(payload.tableID));
-    }); */
   };
 
   return (
