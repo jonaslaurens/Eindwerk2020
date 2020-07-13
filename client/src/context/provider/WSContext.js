@@ -71,6 +71,7 @@ export const WSProvider = (props) => {
     });
   }, []);
 
+  // emits events based on the eventName param with data inside the payload param
   const emitEvent = (eventName, payload) => {
     socket.emit(eventName, payload);
   };
