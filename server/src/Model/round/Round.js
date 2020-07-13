@@ -36,17 +36,6 @@ class Round {
     this.initRound();
   }
 
-  sendCredits() {
-    this.players.forEach((player) => {
-      const credits = {
-        playerCredits: player.credits,
-        pot: this.pot,
-      };
-
-      player.socket.emit('credits', credits);
-    });
-  }
-
   // initiates the round dealing cards to all players and community cards
   initRound() {
     this.players.forEach((player) => {
@@ -87,6 +76,38 @@ class Round {
   // returns the communityCards
   getCommunityCards() {
     return this.communityCards;
+  }
+
+  broadcast() {
+    this.players.forEach((player) => {
+      const data = {
+        type: 'newPlayerAdded',
+        table: {
+          id: this.id,
+          players: this.players
+            .filter((currentPlayer) => currentPlayer.id !== player.id)
+            .map((player) => {
+              return {
+                name: player.name,
+                id: player.id,
+                credits: player.credits,
+              };
+            }),
+        },
+      };
+      player.socket.emit('broadcast', data);
+    });
+  }
+
+  sendCredits() {
+    this.players.forEach((player) => {
+      const credits = {
+        playerCredits: player.credits,
+        pot: this.pot,
+      };
+
+      player.socket.emit('credits', credits);
+    });
   }
 
   // handles the current decider. Will increment if previous made decision or

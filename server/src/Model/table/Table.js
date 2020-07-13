@@ -70,41 +70,8 @@ class Table {
     return this.players.map((player) => player.socket);
   }
 
-  // start a game
-  // startGame(io, socket) {
-  //   // check if we have enough players
-  //   if (this.players.length <= 1) {
-  //     return socket.emit('casinoError', {
-  //       msg: 'Not enough players to start the game',
-  //     });
-  //   }
-
-  //   // check if there is a round in progress
-  //   if (this.currentRound) {
-  //     return socket.emit('casinoError', {
-  //       msg: 'Round in progress, new one will begin shortly',
-  //     });
-  //   }
-
-  //   // create new array of our players that are gonna play a game
-  //   const playingPlayers = this.players.map((player) => player);
-
-  //   // start new round with current players
-  //   this.currentRound = new Round(
-  //     playingPlayers,
-  //     this.previousStarter,
-  //     io,
-  //     this.id
-  //   );
-
-  //   // handle previous starter so we allways have a new first decider
-  //   this.previousStarter = handleDecider(
-  //     this.previousStarter,
-  //     this.players.length
-  //   );
-  // }
-
-  startGame(socket) {
+  // start game whenever
+  /*   startGame(socket) {
     // check if we have enough players
     if (this.players.length <= 1) {
       return socket.emit('casinoError', {
@@ -134,13 +101,28 @@ class Table {
       this.previousStarter,
       this.players.length
     );
+  } */
+
+  // start game when there are playerlimit is reached
+  startGame() {
+    // create new array of our players that are gonna play a game
+    const playingPlayers = this.players.map((player) => player);
+
+    // start new round with current players
+    this.currentRound = new Round(
+      playingPlayers,
+      this.previousStarter,
+      this.id
+    );
+
+    // handle previous starter so we allways have a new first decider
+    this.previousStarter = handleDecider(
+      this.previousStarter,
+      this.players.length
+    );
   }
 
   broadcast() {
-    if (this.players.length === 1) {
-      return this.players[0].socket.emit('seated', this.id);
-    }
-
     this.players.forEach((player) => {
       const data = {
         type: 'newPlayerAdded',

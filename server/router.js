@@ -36,12 +36,15 @@ module.exports = (app, casino) => {
     // a new room will be created
     connectedSocket.join(data.table.id);
 
+    // try starting a game
+
     // send initial data to connected client
     res.status(200).json(data);
 
-    // // try starting a game
-    // table.startGame(req.io, connectedSocket);
-
+    // start game when table is full
+    if (!table.hasAvailableSpots()) {
+      table.startGame();
+    }
     return;
 
     // return res.status(200).json(data);

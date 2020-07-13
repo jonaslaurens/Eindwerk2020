@@ -6,19 +6,17 @@ const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
 const attachListenersToSocket = (socket, casino) => {
-  // try starting a game
-  socket.on('startGame', (payload) => {
-    // get our table
-    const table = casino.getTable(payload);
+  // try starting a game with the id of the table in the payload param
+  // socket.on('startGame', (payload) => {
+  //   // get our table
+  //   const table = casino.getTable(payload);
 
-    table.startGame(socket);
-  });
+  //   table.startGame(socket);
+  // });
 
+  // payload is the id of the table
   socket.on('decision', (payload) => {
-    console.log(payload);
-
-    // get current table based on payload.table -> contains the table id
-
+    // get table based on payload
     const table = casino.getTable(payload.table);
 
     // get current player
@@ -28,7 +26,7 @@ const attachListenersToSocket = (socket, casino) => {
     // get the current round
     const currentRound = table.getRound();
 
-    // handle decision
+    // handle decision based on decision in the payload param
     switch (payload.decision) {
       case 'call':
         handleCall(currentRound, player, index);
