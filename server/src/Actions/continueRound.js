@@ -30,14 +30,16 @@ const continueRound = (table, round) => {
     const currentPlayer = getCurrentPlayer(table, winner.socket);
     table.players[currentPlayer.index].credits += round.pot;
 
-    table.players.forEach((player) => console.log(player.credits));
+    // set pot to 0
+    round.pot = 0;
 
-    // send new credits to players
+    // send updated credits to players
+    round.sendCredits();
 
     // send msg to winner
     winner.socket.emit('endgame', { message: 'You Won!' });
 
-    // send message to only losers who won
+    // send message to only losers saying who won
     table.getSockets().forEach((socket) =>
       socket.emit('broadcast', {
         message: `${winner.name} won with a ${winner.result.name}`,
@@ -52,6 +54,9 @@ const continueRound = (table, round) => {
 
     return;
   }
+
+  // send updated credits
+  round.sendCredits();
 
   round.handleCurrentDecider();
 

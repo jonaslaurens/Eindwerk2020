@@ -33,6 +33,9 @@ const Table = () => {
       {error && <Alerter type="info" msg={error.msg} />}
       <div className="table">
         <div className="cards">{renderCommunityCards()}</div>
+        <div className="pot">
+          Pot:&nbsp;<span>{table.pot ? table.pot : 0}</span>
+        </div>
         <div className="players">
           <Player {...selectedPlayer} key={selectedPlayer.id} index={1} />
           {table.hasOwnProperty('players')

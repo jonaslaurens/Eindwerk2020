@@ -36,27 +36,18 @@ class Round {
     this.initRound();
   }
 
+  sendCredits() {
+    this.players.forEach((player) => {
+      const credits = {
+        playerCredits: player.credits,
+        pot: this.pot,
+      };
+
+      player.socket.emit('credits', credits);
+    });
+  }
+
   // initiates the round dealing cards to all players and community cards
-  // initRound() {
-  //   this.players.forEach((player) => {
-  //     const handCards = this.dealer.dealAmountOfCards(2);
-  //     // store player cards on player object
-  //     player.cards = handCards;
-  //     // send player card to players socket
-  //     player.socket.emit('handCards', handCards);
-  //   });
-
-  //   // send community cards to all sockets (can be room broadcast)
-  //   this.communityCards = this.dealer.dealAmountOfCards(5);
-
-  //   this.io.to(this.tableId).emit('broadcast', {
-  //     type: 'communityCards',
-  //     cards: this.communityCards,
-  //   });
-
-  //   this.askDecision();
-  // }
-
   initRound() {
     this.players.forEach((player) => {
       const handCards = this.dealer.dealAmountOfCards(2);

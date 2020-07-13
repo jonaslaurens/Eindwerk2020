@@ -31,6 +31,9 @@ export const tableSlice = createSlice({
     setCommunityCards: (state, { payload }) => {
       state.table.communityCards = payload;
     },
+    updatePot: (state, { payload }) => {
+      state.table.pot = payload;
+    },
   },
 });
 
@@ -39,6 +42,7 @@ export const {
   checkPlayers,
   updateTable,
   setCommunityCards,
+  updatePot,
 } = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;

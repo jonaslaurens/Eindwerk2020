@@ -43,6 +43,9 @@ export const loginSlice = createSlice({
     setDecision: (state, { payload }) => {
       state.player.decisions = payload;
     },
+    updateCredits: (state, { payload }) => {
+      state.player.credits = payload;
+    },
   },
 });
 
@@ -52,6 +55,7 @@ export const {
   setSocketId,
   setCards,
   setDecision,
+  updateCredits,
 } = loginSlice.actions;
 
 export const selectLoginState = (state) => state.login.isLoggedIn;

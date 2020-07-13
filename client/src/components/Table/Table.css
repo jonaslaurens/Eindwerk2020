@@ -49,6 +49,21 @@
   margin-right: 15px;
 }
 
+.table .pot {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: 'Houschka Rounded';
+  font-weight: bold;
+  font-size: 14px;
+  color: #96e296;
+}
+
+.table .pot span:before {
+  content: '€';
+}
+
 .table .players .player-cards {
   display: flex;
   flex-direction: row;
@@ -75,8 +90,8 @@
   color: #96e296;
 }
 
-.bank .bankValue:after {
-  content: '$';
+.bank .bankValue:before {
+  content: '€';
 }
 
 .players {

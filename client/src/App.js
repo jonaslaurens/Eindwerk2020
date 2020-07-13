@@ -8,6 +8,8 @@ import { selectLoginState } from './components/Login/loginSlice';
 import Login from './components/Login/Login';
 import Table from './components/Table/Table';
 
+// TODO: remove the table component comment
+
 const App = () => {
   const isLoggedIn = useSelector(selectLoginState);
 

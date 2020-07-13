@@ -9,10 +9,12 @@ import {
   setCards,
   setErrors,
   setDecision,
+  updateCredits,
 } from '../../components/Login/loginSlice';
 import {
   updateTable,
   setCommunityCards,
+  updatePot,
 } from '../../components/Table/tableSlice';
 
 // init socket
@@ -45,6 +47,13 @@ export const WSProvider = (props) => {
       // when player is given a seat at a table
       // try starting a game
       socket.emit('startGame', payload);
+    });
+
+    socket.on('credits', (payload) => {
+      // update table pot
+      dispatch(updatePot(payload.pot));
+      // update player credits
+      dispatch(updateCredits(payload.playerCredits));
     });
 
     //handle broadcast emits
