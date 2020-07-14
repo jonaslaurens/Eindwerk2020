@@ -28,18 +28,6 @@ class Table {
     this.previousStarter = 0;
   }
 
-  getCards() {
-    const dealer = new Dealer();
-
-    const player = dealer.dealAmountOfCards(2);
-    const community = dealer.dealAmountOfCards(5);
-
-    return {
-      player,
-      community,
-    };
-  }
-
   hasAvailableSpots() {
     return this.players.length < this.playerLimit;
   }
