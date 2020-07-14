@@ -7,16 +7,18 @@ import { useDispatch } from 'react-redux';
 import {
   setSocketId,
   setCards,
-  setErrors,
   setDecision,
   updateCredits,
 } from '../../components/Login/loginSlice';
+
 import {
   updateTable,
   setCommunityCards,
   updatePot,
   updatePlayerCredits,
 } from '../../components/Table/tableSlice';
+
+import { setError } from '../../components/Alerter/AlerterSlice';
 
 // init socket
 const socket = io(BASE_URL);
@@ -37,7 +39,7 @@ export const WSProvider = (props) => {
     });
 
     socket.on('casinoError', (payload) => {
-      dispatch(setErrors(payload));
+      dispatch(setError(payload));
     });
 
     socket.on('decision', (payload) => {
@@ -66,7 +68,7 @@ export const WSProvider = (props) => {
         // handle new player added
         case 'newPlayerAdded':
           if (payload.table.hasOwnProperty('players')) {
-            dispatch(setErrors(''));
+            dispatch(setError(''));
             dispatch(updateTable(payload.table.players));
             socket.emit('startGame', payload.table.id);
           }

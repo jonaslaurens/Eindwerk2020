@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../helpers/baseUrl';
 
 import { addTable } from '../Table/tableSlice';
+import { setError } from '../Alerter/AlerterSlice';
 
 import Axios from 'axios';
 
@@ -12,7 +13,7 @@ export const login = (values) => (dispatch) => {
       dispatch(addTable(res.data.table));
     })
     .catch((err) => {
-      dispatch(setErrors(err.response.data));
+      dispatch(setError(err.response.data));
     });
 };
 
@@ -31,9 +32,6 @@ export const loginSlice = createSlice({
       state.isLoggedIn = true;
       state.player = payload;
     },
-    setErrors: (state, { payload }) => {
-      state.error = payload;
-    },
     setSocketId: (state, { payload }) => {
       state.socketId = payload;
     },
@@ -51,7 +49,6 @@ export const loginSlice = createSlice({
 
 export const {
   loginSuccess,
-  setErrors,
   setSocketId,
   setCards,
   setDecision,
@@ -59,8 +56,6 @@ export const {
 } = loginSlice.actions;
 
 export const selectLoginState = (state) => state.login.isLoggedIn;
-
-export const selectError = (state) => state.login.error;
 
 export const selectPlayer = (state) => state.login.player;
 

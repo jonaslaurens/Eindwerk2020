@@ -40,11 +40,13 @@ const continueRound = (table, round) => {
     winner.socket.emit('endgame', { message: 'You Won!' });
 
     // send message to only losers saying who won
-    table.getSockets().forEach((socket) =>
-      socket.emit('broadcast', {
+    table.getSockets().forEach((socket) => {
+      const data = {
+        type: 'endgame',
         message: `${winner.name} won with a ${winner.result.name}`,
-      })
-    );
+      };
+      socket.emit('broadcast', data);
+    });
 
     // reset round
     table.currentRound = null;
