@@ -34,6 +34,15 @@ export const tableSlice = createSlice({
     updatePot: (state, { payload }) => {
       state.table.pot = payload;
     },
+    updatePlayerCredits: (state, { payload }) => {
+      state.table.players.forEach((tablePlayer) => {
+        payload.forEach((player) => {
+          if (tablePlayer.id === player.id) {
+            tablePlayer.credits = player.credits;
+          }
+        });
+      });
+    },
   },
 });
 
@@ -43,6 +52,7 @@ export const {
   updateTable,
   setCommunityCards,
   updatePot,
+  updatePlayerCredits,
 } = tableSlice.actions;
 
 export const selectTable = (state) => state.table.table;

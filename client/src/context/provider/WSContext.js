@@ -15,6 +15,7 @@ import {
   updateTable,
   setCommunityCards,
   updatePot,
+  updatePlayerCredits,
 } from '../../components/Table/tableSlice';
 
 // init socket
@@ -52,6 +53,9 @@ export const WSProvider = (props) => {
     socket.on('credits', (payload) => {
       // update table pot
       dispatch(updatePot(payload.pot));
+      // update table player credits
+      dispatch(updatePlayerCredits(payload.tablePlayerCredits));
+
       // update player credits
       dispatch(updateCredits(payload.playerCredits));
     });

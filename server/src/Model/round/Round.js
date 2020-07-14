@@ -99,11 +99,21 @@ class Round {
     });
   }
 
+  getPlayerCredits() {
+    return this.players.map((player) => {
+      return {
+        id: player.id,
+        credits: player.credits,
+      };
+    });
+  }
+
   sendCredits() {
     this.players.forEach((player) => {
       const credits = {
         playerCredits: player.credits,
         pot: this.pot,
+        tablePlayerCredits: this.getPlayerCredits(),
       };
 
       player.socket.emit('credits', credits);
@@ -131,7 +141,7 @@ class Round {
 
   // checks if we have a possible end game
   checkEndGame() {
-    if (this.activePlayers === 1) {
+    if (this.players.length === 1) {
       return true;
     }
 
