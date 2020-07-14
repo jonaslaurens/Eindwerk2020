@@ -33,10 +33,8 @@ const continueRound = (table, round) => {
     // set pot to 0
     round.pot = 0;
 
-    // TODO: below 2 functions should be refactored to one function
     // send updated credits to players
     round.sendCredits();
-    round.broadcast();
 
     // send msg to winner
     winner.socket.emit('endgame', { message: 'You Won!' });
@@ -59,10 +57,8 @@ const continueRound = (table, round) => {
     return;
   }
 
-  // TODO: below 2 functions should be refactored to one function
   // send updated credits
   round.sendCredits();
-  round.broadcast();
 
   round.handleCurrentDecider();
 
