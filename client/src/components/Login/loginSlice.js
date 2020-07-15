@@ -1,20 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../helpers/baseUrl';
 
+import { isValidLogin } from './loginValidation';
+
 import { addTable } from '../Table/tableSlice';
 import { setError } from '../Alerter/AlertSlice';
 
 import Axios from 'axios';
 
 export const login = (values) => (dispatch) => {
-  Axios.post(`${BASE_URL}/login`, values)
-    .then((res) => {
-      dispatch(loginSuccess(res.data.player));
-      dispatch(addTable(res.data.table));
-    })
-    .catch((err) => {
-      dispatch(setError(err.response.data));
-    });
+  const { errors, isValid } = isValidLogin(values);
+
+  // validate inputs
+  if (!isValid) {
+    dispatch(setError(errors));
+  } else {
+    Axios.post(`${BASE_URL}/login`, values)
+      .then((res) => {
+        dispatch(loginSuccess(res.data.player));
+        dispatch(addTable(res.data.table));
+      })
+      .catch((err) => {
+        console.log(err.request);
+
+        if (err.request.status === 404) {
+          dispatch(
+            setError({
+              casinoServer: `Casino Server ${err.request.statusText}`,
+            })
+          );
+        } else {
+          dispatch(setError(err.response.data));
+        }
+      });
+  }
 };
 
 export const loginName = 'login';
