@@ -8,28 +8,15 @@
   border: 15px solid #a95555;
 }
 
-.table:before {
-  content: '';
-  border: 7px solid rgba(0, 0, 0, 0.1);
-  display: block;
-  width: 1015px;
-  height: 415px;
-  border-radius: 150px;
-  position: absolute;
-  top: -15px;
-  left: -15px;
-}
-
 .table:after {
   content: '';
-  border: 7px solid rgba(0, 0, 0, 0.1);
-  display: block;
-  width: 985px;
-  height: 385px;
+  border: 15px solid rgba(0, 0, 0, 0.1);
+  width: 970px;
+  height: 370px;
   border-radius: 130px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
 }
 
 .table .cards {
