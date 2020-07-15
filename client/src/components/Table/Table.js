@@ -31,7 +31,7 @@ const Table = () => {
 
   return (
     <>
-      {error && <Alerter type="info" msg={error.msg} />}
+      {error && <Alerter type={error.type} msg={error.message} />}
       <div className="table">
         <div className="cards">{renderCommunityCards()}</div>
         <div className="pot">

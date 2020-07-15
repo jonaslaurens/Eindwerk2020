@@ -39,6 +39,7 @@ export const WSProvider = (props) => {
     });
 
     socket.on('casinoError', (payload) => {
+      console.log(payload);
       dispatch(setError(payload));
     });
 

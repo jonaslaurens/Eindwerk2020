@@ -43,11 +43,14 @@ module.exports = (app, casino) => {
 
     // start game when table is full
     if (!table.hasAvailableSpots()) {
-      table.startGame();
+      return table.startGame();
     }
-    return;
 
-    // return res.status(200).json(data);
+    // else return message that table is not full yet
+    return connectedSocket.emit('casinoError', {
+      type: 'warning',
+      message: 'Not enough players to start the game',
+    });
   });
 
   // handle get table info
