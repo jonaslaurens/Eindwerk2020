@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { selectTable } from './tableSlice';
 import { selectPlayer } from '../Login/loginSlice';
-import { selectError } from '../Alerter/AlerterSlice';
+import { selectError } from '../Alerter/AlertSlice';
 
 import './Table.css';
 

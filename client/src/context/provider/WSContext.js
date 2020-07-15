@@ -18,7 +18,7 @@ import {
   updatePlayerCredits,
 } from '../../components/Table/tableSlice';
 
-import { setError } from '../../components/Alerter/AlerterSlice';
+import { setError } from '../../components/Alerter/AlertSlice';
 
 // init socket
 const socket = io(BASE_URL);

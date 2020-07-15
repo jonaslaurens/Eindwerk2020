@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../helpers/baseUrl';
 
 import { addTable } from '../Table/tableSlice';
-import { setError } from '../Alerter/AlerterSlice';
+import { setError } from '../Alerter/AlertSlice';
 
 import Axios from 'axios';
 
