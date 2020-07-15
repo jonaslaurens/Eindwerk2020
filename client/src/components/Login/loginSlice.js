@@ -9,9 +9,10 @@ import { setError } from '../Alerter/AlertSlice';
 import Axios from 'axios';
 
 export const login = (values) => (dispatch) => {
+  // validate inputs
   const { errors, isValid } = isValidLogin(values);
 
-  // validate inputs
+  // handle errors if not valid inputs else send request to server
   if (!isValid) {
     dispatch(setError(errors));
   } else {
