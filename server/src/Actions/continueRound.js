@@ -43,6 +43,8 @@ const continueRound = (table, round) => {
     table.getSockets().forEach((socket) => {
       const data = {
         type: 'endgame',
+        winner: winner.name,
+        result: winner.result.name,
         message: `${winner.name} won with a ${winner.result.name}`,
       };
       socket.emit('broadcast', data);

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectTable } from './tableSlice';
-import { selectPlayer } from '../Login/loginSlice';
+import { selectPlayer, selectPlayerName } from '../Login/loginSlice';
 import { selectError } from '../Alerter/AlertSlice';
 
 import './Table.css';

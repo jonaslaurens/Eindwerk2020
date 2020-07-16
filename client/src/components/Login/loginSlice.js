@@ -81,6 +81,8 @@ export const selectPlayer = (state) => state.login.player;
 
 export const selectPlayerId = (state) => state.login.player.id;
 
+export const selectPlayerName = (state) => state.login.player.name;
+
 export const selectPlayerCards = (state) => state.login.player.cards;
 
 export const selectSocketId = (state) => state.login.socketId;
