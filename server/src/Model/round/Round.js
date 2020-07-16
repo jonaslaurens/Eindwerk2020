@@ -53,11 +53,13 @@ class Round {
     this.players[0].socket.emit('broadcast', {
       type: 'communityCards',
       cards: this.communityCards,
+      message: 'round starting',
     });
 
     this.players[0].socket.to(this.tableId).emit('broadcast', {
       type: 'communityCards',
       cards: this.communityCards,
+      message: 'round starting',
     });
 
     this.askDecision();
@@ -136,6 +138,7 @@ class Round {
 
     currentPlayer.socket.emit('decision', {
       actions: any,
+      message: 'your turn!',
     });
   }
 

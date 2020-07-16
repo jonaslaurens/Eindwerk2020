@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Alert } from '@material-ui/lab';
 
@@ -8,11 +8,26 @@ const Alerter = ({ type, msg }) => {
   // type can be:
   // error, warning, info, success
 
-  return (
+  const [isShowing, setIsShowing] = useState(true);
+
+  useEffect(() => {
+    let timer = setTimeout(() => setIsShowing(false), 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  /*   return (
     <Alert className="alerter" variant="outlined" severity={type}>
       {msg}
     </Alert>
-  );
+  ); */
+  return isShowing ? (
+    <Alert className="alerter" variant="outlined" severity={type}>
+      {msg}
+    </Alert>
+  ) : null;
 };
 
 export default Alerter;

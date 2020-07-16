@@ -1,4 +1,4 @@
-import React, { useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import io from 'socket.io-client';
 import { BASE_URL } from '../../helpers/baseUrl';
 
@@ -31,77 +31,65 @@ export const WSProvider = (props) => {
   const dispatch = useDispatch();
   const playerName = useSelector(selectPlayerName);
 
-  console.log(playerName);
+  useEffect(() => {
+    socket.on('connected', (payload) => {
+      return dispatch(setSocketId(payload));
+    });
 
-  // useEffect(() => {
+    socket.on('handCards', (payload) => {
+      return dispatch(setCards(payload));
+    });
 
-  // }, []);
+    socket.on('casinoError', (payload) => {
+      console.log(payload);
+      return dispatch(setError(payload));
+    });
 
-  socket.on('connected', (payload) => {
-    return dispatch(setSocketId(payload));
-  });
+    socket.on('decision', (payload) => {
+      dispatch(setError({ type: 'warning', message: payload.message }));
+      return dispatch(setDecision(payload));
+    });
 
-  socket.on('handCards', (payload) => {
-    return dispatch(setCards(payload));
-  });
+    socket.on('credits', (payload) => {
+      // update table pot
+      dispatch(updatePot(payload.pot));
+      // update table player credits
+      dispatch(updatePlayerCredits(payload.tablePlayerCredits));
 
-  socket.on('casinoError', (payload) => {
-    console.log(payload);
-    return dispatch(setError(payload));
-  });
+      // update player credits
+      return dispatch(updateCredits(payload.playerCredits));
+    });
 
-  socket.on('decision', (payload) => {
-    return dispatch(setDecision(payload));
-  });
+    //handle broadcast emits
+    socket.on('broadcast', (payload) => {
+      switch (payload.type) {
+        // handle new player added
+        case 'newPlayerAdded':
+          if (payload.table.hasOwnProperty('players')) {
+            dispatch(setError(''));
+            dispatch(updateTable(payload.table.players));
+          }
+          break;
 
-  socket.on('seated', (payload) => {
-    // when player is given a seat at a table
-    // try starting a game
-    return socket.emit('startGame', payload);
-  });
+        // handle community cards
+        case 'communityCards':
+          dispatch(setCommunityCards(payload.cards));
+          dispatch(setError({ type: 'info', message: payload.message }));
+          break;
 
-  socket.on('credits', (payload) => {
-    // update table pot
-    dispatch(updatePot(payload.pot));
-    // update table player credits
-    dispatch(updatePlayerCredits(payload.tablePlayerCredits));
-
-    // update player credits
-    return dispatch(updateCredits(payload.playerCredits));
-  });
-
-  //handle broadcast emits
-  socket.on('broadcast', (payload) => {
-    switch (payload.type) {
-      // handle new player added
-      case 'newPlayerAdded':
-        if (payload.table.hasOwnProperty('players')) {
-          dispatch(setError(''));
-          dispatch(updateTable(payload.table.players));
-          socket.emit('startGame', payload.table.id);
-        }
-        break;
-
-      // handle community cards
-      case 'communityCards':
-        dispatch(setCommunityCards(payload.cards));
-        break;
-
-      // TODO: case END GAME
-      case 'endgame':
-        console.log(playerName);
-        if (payload.winner === playerName) {
-          return dispatch(
-            setError({ type: 'success', message: payload.message })
-          );
-        } else {
-          dispatch(setError({ type: 'warning', message: payload.message }));
-        }
-        break;
-      default:
-        console.log('something went wrong..');
-    }
-  });
+        // TODO: case END GAME
+        case 'endgame':
+          if (payload.winner === playerName) {
+            dispatch(setError({ type: 'success', message: payload.message }));
+          } else {
+            dispatch(setError({ type: 'warning', message: payload.message }));
+          }
+          break;
+        default:
+          console.log('something went wrong..');
+      }
+    });
+  }, []);
 
   // emits events based on the eventName param with data inside the payload param
   const emitEvent = (eventName, payload) => {
