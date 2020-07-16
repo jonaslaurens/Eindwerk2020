@@ -3,4 +3,6 @@
   flex-direction: row;
   width: 300px;
   justify-content: space-between;
+  position: absolute;
+  bottom: 50px;
 }
