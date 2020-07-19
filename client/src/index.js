@@ -13,7 +13,7 @@ import { WSProvider } from './context/provider/WSContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} closeAction={true}>
       <Provider store={store}>
         <WSProvider>
           <App />

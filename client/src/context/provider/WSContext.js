@@ -30,8 +30,10 @@ export const WSContext = createContext();
 // socket provider
 export const WSProvider = (props) => {
   const dispatch = useDispatch();
-  const playerName = useSelector(selectPlayerName);
+  const playerName = useSelector((state) => state.login.player.name);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  console.log(playerName);
 
   useEffect(() => {
     socket.on('connected', (payload) => {
@@ -43,9 +45,7 @@ export const WSProvider = (props) => {
     });
 
     socket.on('casinoError', (payload) => {
-      console.log(payload);
-
-      return enqueueSnackbar(payload.message, { variant: 'warning' });
+      enqueueSnackbar(payload.message, { variant: 'warning' });
     });
 
     socket.on('decision', (payload) => {
@@ -84,6 +84,8 @@ export const WSProvider = (props) => {
 
         // TODO: case END GAME
         case 'endgame':
+          console.log(playerName);
+
           if (payload.winner === playerName) {
             enqueueSnackbar(payload.message, {
               variant: 'success',
