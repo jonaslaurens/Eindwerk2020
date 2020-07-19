@@ -6,16 +6,20 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+import { SnackbarProvider } from 'notistack';
+
 // context
 import { WSProvider } from './context/provider/WSContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <WSProvider>
-        <App />
-      </WSProvider>
-    </Provider>
+    <SnackbarProvider maxSnack={3}>
+      <Provider store={store}>
+        <WSProvider>
+          <App />
+        </WSProvider>
+      </Provider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

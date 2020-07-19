@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useSelector } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
 
 import { selectLoginState } from './components/Login/loginSlice';
 

@@ -35,7 +35,7 @@ const Table = () => {
 
   return (
     <>
-      {error ? renderError(error.type, error.message) : null}
+      {/*       {error ? renderError(error.type, error.message) : null} */}
       {/* {error && <Alerter type={error.type} msg={error.message} />} */}
       <div className="table">
         <div className="cards">{renderCommunityCards()}</div>

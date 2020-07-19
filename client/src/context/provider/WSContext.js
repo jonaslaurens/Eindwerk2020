@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import { BASE_URL } from '../../helpers/baseUrl';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 import {
   setSocketId,
@@ -30,6 +31,7 @@ export const WSContext = createContext();
 export const WSProvider = (props) => {
   const dispatch = useDispatch();
   const playerName = useSelector(selectPlayerName);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     socket.on('connected', (payload) => {
@@ -42,11 +44,12 @@ export const WSProvider = (props) => {
 
     socket.on('casinoError', (payload) => {
       console.log(payload);
-      return dispatch(setError(payload));
+
+      return enqueueSnackbar(payload.message, { variant: 'warning' });
     });
 
     socket.on('decision', (payload) => {
-      dispatch(setError({ type: 'warning', message: payload.message }));
+      enqueueSnackbar(payload.message, { variant: 'warning' });
       return dispatch(setDecision(payload));
     });
 
@@ -74,15 +77,21 @@ export const WSProvider = (props) => {
         // handle community cards
         case 'communityCards':
           dispatch(setCommunityCards(payload.cards));
-          dispatch(setError({ type: 'info', message: payload.message }));
+          enqueueSnackbar(payload.message, {
+            variant: 'info',
+          });
           break;
 
         // TODO: case END GAME
         case 'endgame':
           if (payload.winner === playerName) {
-            dispatch(setError({ type: 'success', message: payload.message }));
+            enqueueSnackbar(payload.message, {
+              variant: 'success',
+            });
           } else {
-            dispatch(setError({ type: 'warning', message: payload.message }));
+            enqueueSnackbar(payload.message, {
+              variant: 'warning',
+            });
           }
           break;
         default:
