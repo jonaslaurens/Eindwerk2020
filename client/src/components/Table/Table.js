@@ -29,9 +29,14 @@ const Table = () => {
     }
   };
 
+  const renderError = (type, message) => {
+    return <Alerter type={type} msg={message} />;
+  };
+
   return (
     <>
-      {error && <Alerter type={error.type} msg={error.message} />}
+      {error ? renderError(error.type, error.message) : null}
+      {/* {error && <Alerter type={error.type} msg={error.message} />} */}
       <div className="table">
         <div className="cards">{renderCommunityCards()}</div>
         <div className="pot">

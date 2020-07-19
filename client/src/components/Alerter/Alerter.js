@@ -11,7 +11,13 @@ const Alerter = ({ type, msg }) => {
   const [isShowing, setIsShowing] = useState(true);
 
   useEffect(() => {
-    let timer = setTimeout(() => setIsShowing(false), 2000);
+    console.log(typeof type);
+    console.log(msg);
+
+    let timer;
+    if (type !== 'warning') {
+      timer = setTimeout(() => setIsShowing(false), 2000);
+    }
 
     return () => {
       clearTimeout(timer);
