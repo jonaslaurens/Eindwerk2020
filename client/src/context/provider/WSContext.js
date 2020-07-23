@@ -31,17 +31,21 @@ export const WSContext = createContext();
 // socket provider
 export const WSProvider = (props) => {
   const dispatch = useDispatch();
-  const playerName = useSelector((state) => state.login.player.name);
-
-  console.log(playerName);
+  const playerName = useSelector(selectPlayerName);
 
   useEffect(() => {
+    let won = false;
+
     socket.on('connected', (payload) => {
       return dispatch(setSocketId(payload));
     });
 
     socket.on('handCards', (payload) => {
       return dispatch(setCards(payload));
+    });
+
+    socket.on('endgame', (payload) => {
+      won = true;
     });
 
     socket.on('casinoError', (payload) => {
@@ -91,13 +95,12 @@ export const WSProvider = (props) => {
 
         // TODO: case END GAME
         case 'endgame':
-          console.log(playerName);
-
-          if (payload.winner === playerName) {
-            toast.success(payload.message, {
+          if (won) {
+            toast.success('You won ', {
               pauseOnHover: true,
               progress: undefined,
             });
+            won = false;
           } else {
             toast.warn(payload.message, {
               pauseOnHover: true,

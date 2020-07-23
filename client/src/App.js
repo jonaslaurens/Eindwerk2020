@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { useSelector } from 'react-redux';
-import { SnackbarProvider } from 'notistack';
 
 import { selectLoginState } from './components/Login/loginSlice';
 
@@ -9,7 +8,7 @@ import { selectLoginState } from './components/Login/loginSlice';
 import Login from './components/Login/Login';
 import Table from './components/Table/Table';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // TODO: remove the table component comment
@@ -25,7 +24,7 @@ const App = () => {
         position="bottom-left"
         autoClose={3000}
         hideProgressBar={false}
-        newestOnTop
+        newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss={false}
