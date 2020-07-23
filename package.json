@@ -5,9 +5,9 @@
   "author": "Jonas Laurens <lauwe505@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "killpm2": "pm2 kill && pm2 kill",
-    "start": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start",
+    "start": "cd server && yarn start-watch && yarn start-watch && cd .. && cd client && yarn start",
+    "stop": "pm2 kill",
     "start-build": "cd server && yarn start && cd .. && cd client && yarn start",
-    "dev": "yarn run killpm2 && cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start"
+    "dev": "cd server && yarn start-watch && yarn start-watch && cd .. && code . && cd client && yarn start"
   }
 }
