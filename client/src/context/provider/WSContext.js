@@ -46,24 +46,14 @@ export const WSProvider = (props) => {
 
     socket.on('casinoError', (payload) => {
       toast.warn(payload.message, {
-        position: 'bottom-left',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
         pauseOnHover: true,
-        draggable: true,
         progress: undefined,
       });
     });
 
     socket.on('decision', (payload) => {
       toast.warn(payload.message, {
-        position: 'bottom-left',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
         pauseOnHover: true,
-        draggable: true,
         progress: undefined,
       });
       return dispatch(setDecision(payload));
@@ -94,12 +84,7 @@ export const WSProvider = (props) => {
         case 'communityCards':
           dispatch(setCommunityCards(payload.cards));
           toast.info(payload.message, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
             pauseOnHover: true,
-            draggable: true,
             progress: undefined,
           });
           break;
@@ -110,22 +95,12 @@ export const WSProvider = (props) => {
 
           if (payload.winner === playerName) {
             toast.success(payload.message, {
-              position: 'bottom-left',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
               pauseOnHover: true,
-              draggable: true,
               progress: undefined,
             });
           } else {
             toast.warn(payload.message, {
-              position: 'bottom-left',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
               pauseOnHover: true,
-              draggable: true,
               progress: undefined,
             });
           }
