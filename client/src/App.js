@@ -9,6 +9,9 @@ import { selectLoginState } from './components/Login/loginSlice';
 import Login from './components/Login/Login';
 import Table from './components/Table/Table';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // TODO: remove the table component comment
 
 const App = () => {
@@ -18,6 +21,17 @@ const App = () => {
     <div className="App">
       {/* <Table /> */}
       {!isLoggedIn ? <Login /> : <Table />}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

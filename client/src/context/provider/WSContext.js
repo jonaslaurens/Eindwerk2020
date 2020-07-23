@@ -3,7 +3,8 @@ import io from 'socket.io-client';
 import { BASE_URL } from '../../helpers/baseUrl';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
+
+import { toast } from 'react-toastify';
 
 import {
   setSocketId,
@@ -31,7 +32,6 @@ export const WSContext = createContext();
 export const WSProvider = (props) => {
   const dispatch = useDispatch();
   const playerName = useSelector((state) => state.login.player.name);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   console.log(playerName);
 
@@ -45,11 +45,27 @@ export const WSProvider = (props) => {
     });
 
     socket.on('casinoError', (payload) => {
-      enqueueSnackbar(payload.message, { variant: 'warning' });
+      toast.warn(payload.message, {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
 
     socket.on('decision', (payload) => {
-      enqueueSnackbar(payload.message, { variant: 'warning' });
+      toast.warn(payload.message, {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return dispatch(setDecision(payload));
     });
 
@@ -77,8 +93,14 @@ export const WSProvider = (props) => {
         // handle community cards
         case 'communityCards':
           dispatch(setCommunityCards(payload.cards));
-          enqueueSnackbar(payload.message, {
-            variant: 'info',
+          toast.info(payload.message, {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
           break;
 
@@ -87,12 +109,24 @@ export const WSProvider = (props) => {
           console.log(playerName);
 
           if (payload.winner === playerName) {
-            enqueueSnackbar(payload.message, {
-              variant: 'success',
+            toast.success(payload.message, {
+              position: 'bottom-left',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
             });
           } else {
-            enqueueSnackbar(payload.message, {
-              variant: 'warning',
+            toast.warn(payload.message, {
+              position: 'bottom-left',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
             });
           }
           break;
