@@ -11,14 +11,11 @@ import Table from './components/Table/Table';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// TODO: remove the table component comment
-
 const App = () => {
   const isLoggedIn = useSelector(selectLoginState);
 
   return (
     <div className="App">
-      {/* <Table /> */}
       {!isLoggedIn ? <Login /> : <Table />}
       <ToastContainer
         position="bottom-left"

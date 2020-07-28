@@ -1,14 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { BASE_URL } from '../../helpers/baseUrl';
-import Axios from 'axios';
 
 export const tableName = 'table';
-
-export const getData = (id) => (dispatch) => {
-  Axios.get(`${BASE_URL}/table/${id}`).then((res) => {
-    dispatch(checkPlayers(res.data));
-  });
-};
 
 export const tableSlice = createSlice({
   name: 'table',
@@ -21,12 +13,6 @@ export const tableSlice = createSlice({
     },
     updateTable: (state, { payload }) => {
       state.table.players = payload;
-    },
-    checkPlayers: (state, { payload }) => {
-      let difference = payload.players.filter(
-        (x) => !state.table.players.includes(x)
-      );
-      state.table.players = difference;
     },
     setCommunityCards: (state, { payload }) => {
       state.table.communityCards = payload;
@@ -48,7 +34,6 @@ export const tableSlice = createSlice({
 
 export const {
   addTable,
-  checkPlayers,
   updateTable,
   setCommunityCards,
   updatePot,

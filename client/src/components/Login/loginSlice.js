@@ -15,7 +15,7 @@ export const login = (values, setSocket) => (dispatch) => {
   } else {
     const socket = io.connect(values.casinoServer, { reconnection: false });
 
-    // if connected do stuff
+    // if connected handle connection
     socket.on('connected', () => {
       // set global socket
       setSocket(socket);
@@ -24,7 +24,7 @@ export const login = (values, setSocket) => (dispatch) => {
       socket.emit('login', values);
     });
 
-    // if failed do stuff
+    // handle failed connection
     socket.on('connect_error', (error) => {
       dispatch(setError({ casinoServer: 'wrong adress' }));
     });
@@ -67,9 +67,5 @@ export const {
 export const selectLoginState = (state) => state.login.isLoggedIn;
 
 export const selectPlayer = (state) => state.login.player;
-
-export const selectPlayerId = (state) => state.login.player.id;
-
-export const selectPlayerCards = (state) => state.login.player.cards;
 
 export default loginSlice.reducer;
