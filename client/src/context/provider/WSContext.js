@@ -19,7 +19,7 @@ import {
   addTable,
 } from '../../components/Table/tableSlice';
 
-import { setError } from '../../components/Alerter/AlertSlice';
+import { setError } from '../../reducers/AlertSlice';
 
 // init context
 export const WSContext = createContext();

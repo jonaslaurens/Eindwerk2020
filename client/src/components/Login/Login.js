@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './loginSlice';
-import { selectError } from '../Alerter/AlertSlice';
+import { selectError } from '../../reducers/AlertSlice';
 
 // material UI
 import {

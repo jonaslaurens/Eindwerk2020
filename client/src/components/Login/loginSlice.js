@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { isValidLogin } from './loginValidation';
 
-import { setError } from '../Alerter/AlertSlice';
+import { setError } from '../../reducers/AlertSlice';
 
 import io from 'socket.io-client';
 

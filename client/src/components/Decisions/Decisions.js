@@ -9,7 +9,7 @@ import { Button } from '@material-ui/core';
 import './Decisions.css';
 
 import { WSContext } from '../../context/provider/WSContext';
-import { setError } from '../Alerter/AlertSlice';
+import { setError } from '../../reducers/AlertSlice';
 
 const Decisions = () => {
   const { emitEvent } = useContext(WSContext);
