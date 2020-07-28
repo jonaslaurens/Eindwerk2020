@@ -5,7 +5,50 @@ const handleFold = require('./Actions/handleFold');
 const getCurrentPlayer = require('./Helpers/getCurrentPlayer');
 const continueRound = require('./Actions/continueRound');
 
+const Player = require('./Model/player/Player');
+const { isValidLogin } = require('../validation/routerValidation');
+
 const attachListenersToSocket = (socket, casino) => {
+  socket.on('login', (payload) => {
+    const { errors, isValid } = isValidLogin(payload);
+
+    // validate req.body
+    if (!isValid) {
+      return socket.emit('loginError', errors);
+    }
+
+    // create new player
+    const newPlayer = new Player(payload.name, socket);
+
+    // register new player
+    const result = casino.registerNewPlayer(newPlayer);
+
+    const data = {
+      type: 'playerAdded',
+      table: result.table,
+      player: result.player,
+    };
+
+    // send data to socket
+    socket.emit('loggedIn', data);
+
+    // still needed? we got table in data?
+    // get table
+    const table = casino.getTable(result.table.id);
+
+    // send new table data to all connected sockets
+    table.broadcast();
+
+    // have the socket join a room based on the table id.
+    // if the table is full we get a new id and thus
+    // a new room will be created
+    socket.join(data.table.id);
+
+    // try starting game
+    if (!table.hasAvailableSpots()) {
+      return table.startGame();
+    }
+  });
   // try starting a game with the id of the table in the payload param
   // socket.on('startGame', (payload) => {
   //   // get our table
@@ -63,7 +106,7 @@ class Listener {
     io.on('connection', (socket) => {
       console.info('\nA new connection was established\n');
       attachListenersToSocket(socket, casino);
-      socket.emit('connected', socket.id);
+      socket.emit('connected');
     });
   }
 }

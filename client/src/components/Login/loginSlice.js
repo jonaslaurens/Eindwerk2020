@@ -1,39 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { BASE_URL } from '../../helpers/baseUrl';
 
 import { isValidLogin } from './loginValidation';
 
-import { addTable } from '../Table/tableSlice';
 import { setError } from '../Alerter/AlertSlice';
 
-import Axios from 'axios';
+import io from 'socket.io-client';
 
-export const login = (values) => (dispatch) => {
+export const login = (values, setSocket) => (dispatch) => {
   // validate inputs
   const { errors, isValid } = isValidLogin(values);
 
-  // handle errors if not valid inputs else send request to server
   if (!isValid) {
     dispatch(setError(errors));
   } else {
-    Axios.post(`${BASE_URL}/login`, values)
-      .then((res) => {
-        dispatch(loginSuccess(res.data.player));
-        dispatch(addTable(res.data.table));
-      })
-      .catch((err) => {
-        console.log(err.request);
+    const socket = io.connect(values.casinoServer, { reconnection: false });
 
-        if (err.request.status === 404) {
-          dispatch(
-            setError({
-              casinoServer: `Casino Server ${err.request.statusText}`,
-            })
-          );
-        } else {
-          dispatch(setError(err.response.data));
-        }
-      });
+    // if connected do stuff
+    socket.on('connected', () => {
+      // set global socket
+      setSocket(socket);
+
+      // emit login event
+      socket.emit('login', values);
+    });
+
+    // if failed do stuff
+    socket.on('connect_error', (error) => {
+      dispatch(setError({ casinoServer: 'wrong adress' }));
+    });
   }
 };
 
@@ -45,15 +39,11 @@ export const loginSlice = createSlice({
     isLoggedIn: false,
     player: {},
     error: '',
-    socketId: '',
   },
   reducers: {
     loginSuccess: (state, { payload }) => {
       state.isLoggedIn = true;
       state.player = payload;
-    },
-    setSocketId: (state, { payload }) => {
-      state.socketId = payload;
     },
     setCards: (state, { payload }) => {
       state.player.cards = payload;
@@ -69,7 +59,6 @@ export const loginSlice = createSlice({
 
 export const {
   loginSuccess,
-  setSocketId,
   setCards,
   setDecision,
   updateCredits,
@@ -81,10 +70,6 @@ export const selectPlayer = (state) => state.login.player;
 
 export const selectPlayerId = (state) => state.login.player.id;
 
-export const selectPlayerName = (state) => state.login.player.name;
-
 export const selectPlayerCards = (state) => state.login.player.cards;
-
-export const selectSocketId = (state) => state.login.socketId;
 
 export default loginSlice.reducer;

@@ -1,17 +1,14 @@
 import React, { useState, useEffect, createContext } from 'react';
-import io from 'socket.io-client';
-import { BASE_URL } from '../../helpers/baseUrl';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { toast } from 'react-toastify';
 
 import {
-  setSocketId,
   setCards,
   setDecision,
   updateCredits,
-  selectPlayerName,
+  loginSuccess,
 } from '../../components/Login/loginSlice';
 
 import {
@@ -19,25 +16,35 @@ import {
   setCommunityCards,
   updatePot,
   updatePlayerCredits,
+  addTable,
 } from '../../components/Table/tableSlice';
 
 import { setError } from '../../components/Alerter/AlertSlice';
 
-// init socket
-const socket = io(BASE_URL);
 // init context
 export const WSContext = createContext();
 
 // socket provider
 export const WSProvider = (props) => {
+  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
-  const playerName = useSelector(selectPlayerName);
 
   useEffect(() => {
+    addListeners();
+  }, [socket]);
+
+  const addListeners = () => {
     let won = false;
 
-    socket.on('connected', (payload) => {
-      return dispatch(setSocketId(payload));
+    if (socket === null) return;
+
+    socket.on('loggedIn', (payload) => {
+      dispatch(loginSuccess(payload.player));
+      dispatch(addTable(payload.table));
+    });
+
+    socket.on('loginError', (payload) => {
+      dispatch(setError(payload));
     });
 
     socket.on('handCards', (payload) => {
@@ -112,7 +119,7 @@ export const WSProvider = (props) => {
           console.log('something went wrong..');
       }
     });
-  }, []);
+  };
 
   // emits events based on the eventName param with data inside the payload param
   const emitEvent = (eventName, payload) => {
@@ -123,6 +130,7 @@ export const WSProvider = (props) => {
     <WSContext.Provider
       value={{
         emitEvent,
+        setSocket,
       }}
     >
       {props.children}

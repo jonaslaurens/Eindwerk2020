@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectSocketId } from './loginSlice';
+import { login } from './loginSlice';
 import { selectError } from '../Alerter/AlertSlice';
 
 // material UI
@@ -13,6 +13,7 @@ import {
   Container,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { WSContext } from '../../context/provider/WSContext';
 
 const INITIAL_STATE = {
   name: '',
@@ -45,14 +46,10 @@ const Login = () => {
   const [formValues, setFormValues] = useState(INITIAL_STATE);
 
   const error = useSelector(selectError);
-  const socketId = useSelector(selectSocketId);
+
+  const { setSocket } = useContext(WSContext);
 
   const dispatch = useDispatch();
-
-  // dirty fix to add socket to form values
-  useEffect(() => {
-    setFormValues({ ...formValues, socketId });
-  }, [formValues.secretCode]);
 
   // handle input change
   const handleChange = (event) => {
@@ -65,7 +62,7 @@ const Login = () => {
   // handle on submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(formValues));
+    dispatch(login(formValues, setSocket));
   };
 
   return (
