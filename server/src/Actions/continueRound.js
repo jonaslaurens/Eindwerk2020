@@ -37,35 +37,38 @@ const continueRound = (table, round) => {
     round.sendCredits();
 
     // send msg to winner
-    winner.socket.emit('endgame', { message: 'You Won!' });
+    winner.socket.emit('endgame', {
+      message: `You won with ${winner.result.name}`,
+    });
 
     // send message to only losers saying who won
     table.getSockets().forEach((socket) => {
       const data = {
         type: 'endgame',
-        winner: winner.name,
-        result: winner.result.name,
         message: `${winner.name} won with a ${winner.result.name}`,
       };
       socket.emit('broadcast', data);
     });
+
+    // set highest hand
+    table.setHighHand(winner.result.name);
 
     // reset round
     table.currentRound = null;
 
     // try starting new game
     if (!table.hasAvailableSpots()) {
-      table.startGame();
+      return table.startGame();
     }
-
-    return;
   }
 
   // send updated credits
   round.sendCredits();
 
+  // handle current decider
   round.handleCurrentDecider();
 
+  // send decision to next decider
   round.askDecision();
 };
 

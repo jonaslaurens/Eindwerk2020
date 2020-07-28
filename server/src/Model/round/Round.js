@@ -28,8 +28,6 @@ class Round {
     // holds the players bets
     this.playerBets = [];
 
-    // this.io = io;
-
     this.tableId = tableId;
 
     // initiates a round

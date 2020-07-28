@@ -53,6 +53,10 @@ export const WSProvider = (props) => {
 
     socket.on('endgame', (payload) => {
       won = true;
+      toast.success(payload.message, {
+        pauseOnHover: true,
+        progress: undefined,
+      });
     });
 
     socket.on('casinoError', (payload) => {
@@ -100,16 +104,12 @@ export const WSProvider = (props) => {
           });
           break;
 
-        // TODO: case END GAME
+        // handle end game
         case 'endgame':
           if (won) {
-            toast.success('You won ', {
-              pauseOnHover: true,
-              progress: undefined,
-            });
             won = false;
           } else {
-            toast.warn(payload.message, {
+            toast.warn(`${payload.message}`, {
               pauseOnHover: true,
               progress: undefined,
             });

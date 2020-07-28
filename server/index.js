@@ -12,17 +12,10 @@ const router = require('./router');
 app.use(express.json());
 app.use(cors());
 
-// socket.io middleware
-app.use(function (req, res, next) {
-  req.io = io;
-  next();
-});
-
 // init new casino
 const casino = new Casino('Royal');
 new Listener(io, casino);
 
-// pass app and casino to router
 router(app, casino);
 
 io.attach(http);

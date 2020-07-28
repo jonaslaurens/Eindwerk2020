@@ -22,7 +22,7 @@ class Table {
     this.playerLimit = playerLimit;
 
     // holds highest hand
-    this.higestHand = 'high card';
+    this.highestHand = '';
 
     // start on next player every new round
     this.previousStarter = 0;
@@ -34,6 +34,17 @@ class Table {
 
   getRound() {
     return this.currentRound;
+  }
+
+  getHighHand() {
+    if (!this.highestHand) {
+      return false;
+    }
+    return this.highestHand;
+  }
+
+  setHighHand(hand) {
+    this.highestHand = hand;
   }
 
   /*
