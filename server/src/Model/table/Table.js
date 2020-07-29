@@ -3,8 +3,6 @@ const Player = require('../player/Player');
 const Round = require('../round/Round');
 const handleDecider = require('../../Helpers/handleDecider');
 
-const Dealer = require('../dealer/Dealer');
-
 class Table {
   constructor(playerLimit) {
     this.id = generateID();
@@ -28,14 +26,17 @@ class Table {
     this.previousStarter = 0;
   }
 
+  // returns bool to tell if there are free spots on the table
   hasAvailableSpots() {
     return this.players.length < this.playerLimit;
   }
 
+  // returns the current round
   getRound() {
     return this.currentRound;
   }
 
+  // returns the highest hand of the table
   getHighHand() {
     if (!this.highestHand) {
       return false;
@@ -43,6 +44,7 @@ class Table {
     return this.highestHand;
   }
 
+  // sets the highest hand of the table
   setHighHand(hand) {
     this.highestHand = hand;
   }

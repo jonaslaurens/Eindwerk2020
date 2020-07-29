@@ -1,6 +1,4 @@
-const playerActions = {
+module.exports = playerActions = {
   any: ['fold', 'call', 'raise'],
-  raise: ['call', 'raise']
+  raise: ['call', 'raise'],
 };
-
-module.exports = playerActions;

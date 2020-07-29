@@ -16,11 +16,17 @@ class Casino {
       this.tables.push(table);
     }
 
+    // add player to table
     table.addPlayer(player);
 
+    // log that player has been added to table
     console.info(`player: ${player.name} added to table`);
 
-    return { table: table.toObject(player.id), player: player.toObject() };
+    return {
+      table: table,
+      tableObj: table.toObject(player.id),
+      player: player.toObject(),
+    };
   }
 
   // returns a table based on it's id if it exists
@@ -37,6 +43,7 @@ class Casino {
     }
   }
 
+  // returns an empty table
   getEmptyTable() {
     return this.tables.find((table) => table.hasAvailableSpots());
   }

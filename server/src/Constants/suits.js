@@ -1,3 +1,1 @@
-const SUITS = ['Hearts', 'Spades', 'Diamonds', 'Clubs'];
-
-module.exports = SUITS;
+module.exports = SUITS = ['Hearts', 'Spades', 'Diamonds', 'Clubs'];

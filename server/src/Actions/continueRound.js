@@ -7,7 +7,7 @@ const getCurrentPlayer = require('../Helpers/getCurrentPlayer');
 const logStuff = require('../../helpers/logStuff');
 let gameNumber = 0;
 
-const continueRound = (table, round) => {
+module.exports = continueRound = (table, round) => {
   const { players, communityCards } = round;
 
   // handle the end of the game
@@ -71,5 +71,3 @@ const continueRound = (table, round) => {
   // send decision to next decider
   round.askDecision();
 };
-
-module.exports = continueRound;

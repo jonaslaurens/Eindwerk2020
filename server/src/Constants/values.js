@@ -1,4 +1,4 @@
-const VALUES = {
+module.exports = VALUES = {
   Two: 2,
   Three: 3,
   Four: 4,
@@ -11,7 +11,5 @@ const VALUES = {
   Jack: 11,
   Queen: 12,
   King: 13,
-  Ace: 14
+  Ace: 14,
 };
-
-module.exports = VALUES;

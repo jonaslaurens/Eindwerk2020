@@ -1,7 +1,7 @@
 const Player = require('../Model/player/Player');
 const SUPER_SECRET_CODE = require('../Constants/secretCode');
 
-const addPlayer = (payload, casino, socket) => {
+module.exports = addPlayer = (payload, casino, socket) => {
   if (payload.secretCode !== SUPER_SECRET_CODE) {
     return 'Wrong secret code';
   }
@@ -12,5 +12,3 @@ const addPlayer = (payload, casino, socket) => {
 
   return table;
 };
-
-module.exports = addPlayer;

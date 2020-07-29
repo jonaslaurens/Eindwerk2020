@@ -36,6 +36,7 @@ class Round {
 
   // initiates the round dealing cards to all players and community cards
   initRound() {
+    // deal 2 cards for each player
     this.players.forEach((player) => {
       const handCards = this.dealer.dealAmountOfCards(2);
       // store player cards on player object
@@ -44,22 +45,19 @@ class Round {
       player.socket.emit('handCards', handCards);
     });
 
-    // send community cards to all sockets (can be room broadcast)
+    // deal communitycards
     this.communityCards = this.dealer.dealAmountOfCards(5);
 
-    // dirty fix
-    this.players[0].socket.emit('broadcast', {
-      type: 'communityCards',
-      cards: this.communityCards,
-      message: 'round starting',
+    // send community cards to all players
+    this.players.forEach((player) => {
+      player.socket.emit('broadcast', {
+        type: 'communityCards',
+        cards: this.communityCards,
+        message: 'round starting',
+      });
     });
 
-    this.players[0].socket.to(this.tableId).emit('broadcast', {
-      type: 'communityCards',
-      cards: this.communityCards,
-      message: 'round starting',
-    });
-
+    // start round by asking decision
     this.askDecision();
   }
 
@@ -73,32 +71,7 @@ class Round {
     return this.players;
   }
 
-  // returns the communityCards
-  getCommunityCards() {
-    return this.communityCards;
-  }
-
-  broadcast() {
-    this.players.forEach((player) => {
-      const data = {
-        type: 'newPlayerAdded',
-        table: {
-          id: this.id,
-          players: this.players
-            .filter((currentPlayer) => currentPlayer.id !== player.id)
-            .map((player) => {
-              return {
-                name: player.name,
-                id: player.id,
-                credits: player.credits,
-              };
-            }),
-        },
-      };
-      player.socket.emit('broadcast', data);
-    });
-  }
-
+  // returns an object containing the id and credits of each player
   getPlayerCredits() {
     return this.players.map((player) => {
       return {
@@ -108,6 +81,7 @@ class Round {
     });
   }
 
+  // sends an object to each connected player containing his credits, the pot and all other players credits
   sendCredits() {
     this.players.forEach((player) => {
       const credits = {

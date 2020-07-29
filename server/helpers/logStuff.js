@@ -10,7 +10,7 @@ module.exports = logStuff = (T, R, G) => {
   });
 
   // show communityCards
-  console.log(R.getCommunityCards());
+  console.log(R.communityCards);
   spaceHere();
 };
 

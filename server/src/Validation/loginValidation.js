@@ -1,8 +1,8 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
-const SUPER_SECRET_CODE = require('../src/Constants/secretCode');
+const SUPER_SECRET_CODE = require('../Constants/secretCode');
 
-const isValidLogin = (data) => {
+module.exports = isValidLogin = (data) => {
   let errors = {};
 
   data.name = !isEmpty(data.name) ? data.name : '';
@@ -27,8 +27,4 @@ const isValidLogin = (data) => {
     errors,
     isValid: isEmpty(errors),
   };
-};
-
-module.exports = {
-  isValidLogin,
 };
