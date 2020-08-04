@@ -6,7 +6,12 @@ module.exports = isStraight = (countedCards) => {
   // if gotAce is true, check if we have a low ace straight or hight ace straight
   if (gotAce) {
     // check for low
-    if (cards[1] > 0 && cards[2] > 0 && cards[3] > 0 && cards[4] > 0)
+    if (
+      countedCards[1] > 0 &&
+      countedCards[2] > 0 &&
+      countedCards[3] > 0 &&
+      countedCards[4] > 0
+    )
       return true;
 
     // check for high
