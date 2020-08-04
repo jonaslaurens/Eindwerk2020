@@ -1,7 +1,8 @@
 const isPair = require('./index');
+const countCards = require('../countCards');
 
 describe('test if given array contains the combination pair', () => {
-  test('Result should be a true', () => {
+  test('We expect true cause we got a pair', () => {
     const cards = [
       { value: 2, suit: 'Clubs' },
       { value: 4, suit: 'Clubs' },
@@ -9,13 +10,13 @@ describe('test if given array contains the combination pair', () => {
       { value: 2, suit: 'Hearts' },
       { value: 13, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
-      { value: 5, suit: 'Diamonds' }
+      { value: 5, suit: 'Diamonds' },
     ];
 
-    expect(isPair(cards)).toEqual(true);
+    expect(isPair(countCards(cards), 2)).toEqual(true);
   });
 
-  test('Result should be false', () => {
+  test('We expect false cause we got no pair', () => {
     const cards = [
       { value: 2, suit: 'Clubs' },
       { value: 10, suit: 'Clubs' },
@@ -23,9 +24,9 @@ describe('test if given array contains the combination pair', () => {
       { value: 12, suit: 'Hearts' },
       { value: 13, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
-      { value: 5, suit: 'Diamonds' }
+      { value: 5, suit: 'Diamonds' },
     ];
 
-    expect(isPair(cards)).toEqual(false);
+    expect(isPair(countCards(cards), 2)).toEqual(false);
   });
 });
