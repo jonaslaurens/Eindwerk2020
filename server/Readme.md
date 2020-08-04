@@ -11,7 +11,6 @@
 - generateID
 - decideWinner
 - checkCombinations
-- dealer (gewoon wa meer tests)
 - combinationValue
 
 
