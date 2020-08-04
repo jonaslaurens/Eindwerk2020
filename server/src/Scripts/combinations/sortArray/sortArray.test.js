@@ -1,6 +1,6 @@
 const sortArray = require('./index');
 
-describe('Test if groupCards correctly handles different scenarios', () => {
+describe('Test if sortArray correctly handles different scenarios', () => {
   test('Result should be false, because params are empty', () => {
     expect(sortArray()).toEqual(false);
   });
@@ -45,7 +45,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
       { value: 4, suit: 'Clubs' },
-      { value: 2, suit: 'Clubs' }
+      { value: 2, suit: 'Clubs' },
     ];
 
     const result = [
@@ -55,7 +55,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Clubs' },
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     expect(sortArray(cards, 'lowObject')).toEqual(result);
@@ -69,7 +69,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
       { value: 4, suit: 'Clubs' },
-      { value: 2, suit: 'Clubs' }
+      { value: 2, suit: 'Clubs' },
     ];
 
     const result = [
@@ -79,7 +79,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
       { value: 3, suit: 'Hearts' },
-      { value: 2, suit: 'Clubs' }
+      { value: 2, suit: 'Clubs' },
     ];
 
     expect(sortArray(cards, 'highObject')).toEqual(result);

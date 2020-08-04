@@ -1,4 +1,6 @@
 const isRoyalFlush = require('./index');
+const countCards = require('../countCards');
+const countSuits = require('../countSuits');
 
 describe('test if given array contains the combination royal flush', () => {
   test('Result should be a true', () => {
@@ -9,10 +11,12 @@ describe('test if given array contains the combination royal flush', () => {
       { value: 10, suit: 'Clubs' },
       { value: 11, suit: 'Clubs' },
       { value: 12, suit: 'Clubs' },
-      { value: 13, suit: 'Clubs' }
+      { value: 13, suit: 'Clubs' },
     ];
 
-    expect(isRoyalFlush(cards)).toEqual(true);
+    expect(isRoyalFlush(cards, countCards(cards), countSuits(cards))).toEqual(
+      true
+    );
   });
 
   test('Result should be false', () => {
@@ -23,9 +27,11 @@ describe('test if given array contains the combination royal flush', () => {
       { value: 5, suit: 'Diamonds' },
       { value: 10, suit: 'Clubs' },
       { value: 12, suit: 'Hearts' },
-      { value: 13, suit: 'Hearts' }
+      { value: 13, suit: 'Hearts' },
     ];
 
-    expect(isRoyalFlush(cards)).toEqual(false);
+    expect(isRoyalFlush(cards, countCards(cards), countSuits(cards))).toEqual(
+      false
+    );
   });
 });

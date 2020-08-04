@@ -22,8 +22,8 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       name: 'john',
       cards: [
         { value: 1, suit: 'Clubs' },
-        { value: 2, suit: 'Clubs' }
-      ]
+        { value: 2, suit: 'Clubs' },
+      ],
     };
 
     const testCommunityCards = [
@@ -31,7 +31,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 10, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
-      { value: 8, suit: 'Diamonds' }
+      { value: 8, suit: 'Diamonds' },
     ];
 
     const result = [
@@ -41,7 +41,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     expect(groupCards(testPlayer.cards, testCommunityCards)).toEqual(result);
@@ -52,8 +52,8 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       name: 'john',
       cards: [
         { wrongkey: 1, suit: 'Clubs' },
-        { value: 2, suit: 'Clubs' }
-      ]
+        { value: 2, suit: 'Clubs' },
+      ],
     };
 
     const testCommunityCards = [
@@ -61,7 +61,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 10, wrongkey: 'Hearts' },
       { value: 6, suit: 'Clubs' },
-      { value: 8, suit: 'Diamonds' }
+      { value: 8, suit: 'Diamonds' },
     ];
 
     expect(groupCards(testPlayer.cards, testCommunityCards)).toEqual(false);
@@ -72,8 +72,8 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       name: 'john',
       cards: [
         { value: 'Clubs', suit: 'Clubs' },
-        { value: 2, suit: 'Clubs' }
-      ]
+        { value: 2, suit: 'Clubs' },
+      ],
     };
 
     const testCommunityCards = [
@@ -81,7 +81,7 @@ describe('Test if groupCards correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 10, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
-      { value: 8, suit: 'Diamonds' }
+      { value: 8, suit: 'Diamonds' },
     ];
 
     expect(groupCards(testPlayer.cards, testCommunityCards)).toEqual(false);

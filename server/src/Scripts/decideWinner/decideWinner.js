@@ -1,11 +1,11 @@
-const groupCards = require('../groupCards/groupCards');
+const groupCards = require('../groupCards');
 const checkCombinations = require('../checkCombinations');
 
 const decideWinner = (players, communityCards) => {
   const calculatedHands = [];
   let winner = {};
 
-  players.forEach(player => {
+  players.forEach((player) => {
     const groupedCards = groupCards(player.cards, communityCards);
     const result = checkCombinations(groupedCards);
 
@@ -14,7 +14,7 @@ const decideWinner = (players, communityCards) => {
 
   winner = calculatedHands[0];
 
-  calculatedHands.forEach(player =>
+  calculatedHands.forEach((player) =>
     player.result.value > winner.result.value ? (winner = player) : null
   );
 
