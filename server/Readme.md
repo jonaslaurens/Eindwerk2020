@@ -14,6 +14,5 @@
 - dealer (gewoon wa meer tests)
 - combinationValue
 - createSet
-- isLowStraight
 
 

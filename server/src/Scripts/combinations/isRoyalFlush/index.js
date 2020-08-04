@@ -1,6 +1,5 @@
 const isStraightFlush = require('../isStraightFlush');
 const isHighCard = require('../isHighCard');
-const isLowStraight = require('../isLowStraight');
 
 module.exports = isRoyalFlush = (cards, countedCards, countedSuits) => {
   // check if we got a straightflush and if there is an ace
