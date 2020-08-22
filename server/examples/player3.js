@@ -2,13 +2,24 @@ const socket = require('./socket');
 
 const randomizeDecision = require('./randomizeDecision');
 
+let tableId = 0;
+
 socket.on('casino.error', console.log);
 
-socket.emit('login', {
-  name: 'Player 3'
+socket.on('connected', () => {
+  socket.emit('login', {
+    name: 'Player 3',
+    casinoServer: 'localhost:3050',
+    secretCode: 'aze',
+  });
 });
 
-socket.on('decision', payload => {
+socket.on('loggedIn', (payload) => {
+  tableId = payload.table.id;
+});
+
+socket.on('decision', (payload) => {
+  console.log(payload);
   // deconstruct required info
   const { actions } = payload;
 
@@ -26,38 +37,30 @@ socket.on('decision', payload => {
   setTimeout(() => {
     if (randomInt === 2) {
       return socket.emit('decision', {
+        table: tableId,
         decision: actions[randomInt],
-        amount: bet
+        amount: bet,
       });
     }
 
-    socket.emit('decision', { decision: actions[randomInt] });
+    socket.emit('decision', {
+      table: tableId,
+      decision: actions[randomInt],
+      bet: '',
+    });
   }, 2000);
 });
 
-//fixed decision
-/* socket.on('decision', payload => {
-  setTimeout(() => {
-    socket.emit('raise', { amount: 100 });
-  }, 2000);
-}); */
+// socket.on("decision", payload => {
+//   setTimeout(() => {
+//     socket.emit("fold");
+//   }, 2000);
+// });
 
-/*socket.on("decision", payload => {
-  setTimeout(() => {
-    socket.emit("call");
-  }, 2000);
-});*/
-
-/*socket.on("decision", payload => {
-  setTimeout(() => {
-    socket.emit("fold");
-  }, 2000);
-});*/
-
-socket.on('endgame', payload => {
+socket.on('endgame', (payload) => {
   console.info(payload.message);
 });
 
-socket.on('broadcast', payload => {
+socket.on('broadcast', (payload) => {
   console.log(payload.message);
 });

@@ -12,8 +12,6 @@ const continueRound = (table, round) => {
 
   // handle the end of the game
   if (round.checkEndGame()) {
-    logStuff(table, round, gameNumber);
-
     gameNumber++;
 
     // checkwinner
@@ -49,6 +47,8 @@ const continueRound = (table, round) => {
       };
       socket.emit('broadcast', data);
     });
+
+    logStuff(table, round, gameNumber, winner);
 
     // set highest hand
     table.setHighHand(winner.result.name);
