@@ -1,15 +1,16 @@
 module.exports = handleRaise = (round, player, index, raiseAmount) => {
-  // set current bet to new bet
-  round.currentBet += raiseAmount;
-
   // handle all in
-  if (player.credits < round.currentBet) {
-    round.pot += player.credits;
-    round.currentBet += player.credits;
+  if (player.credits < raiseAmount) {
+    round.addToPot(player.credits);
 
     round.playerBets[index] += player.credits;
 
+    // set player creds to 0
     player.credits = 0;
+
+    // set player all in true, so we can check if anyone has gone allin (set betarr equal)
+    player.allIn = true;
+
     return;
   }
 
@@ -21,7 +22,7 @@ module.exports = handleRaise = (round, player, index, raiseAmount) => {
 
   // add current player bet to the bet array
   if (round.playerBets[index] > 0) {
-    round.playerBets[index] = round.currentBet;
+    round.playerBets[index] += round.currentBet;
   } else {
     round.playerBets[index] = round.currentBet;
   }

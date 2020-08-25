@@ -25,6 +25,8 @@ class Round {
     // hold the current bet, if there is a call this will be added to pot
     this.currentBet = 0;
 
+    this.raiseAmount = 0;
+
     // holds the players bets
     this.playerBets = [];
 
@@ -60,12 +62,20 @@ class Round {
       message: 'round starting',
     });
 
+    this.handleBigBlind();
+
+    this.sendCredits();
+
     this.askDecision();
   }
 
   // checks if all bets are equal
   equalBets() {
     return this.playerBets.every((val, i, arr) => val === arr[0]);
+  }
+
+  addToPot(amount) {
+    this.pot += amount;
   }
 
   // returns all active players
@@ -76,6 +86,27 @@ class Round {
   // returns the communityCards
   getCommunityCards() {
     return this.communityCards;
+  }
+
+  hasBets() {
+    return this.playerBets.length > 0;
+  }
+
+  getHighestBet() {
+    return this.playerBets.reduce((a, b) => {
+      return Math.max(a, b);
+    });
+  }
+
+  handleBigBlind() {
+    if (this.currentDecider === this.players.length - 1) {
+      this.players[0].credits -= this.minimumBet;
+      this.bigBlind = this.players[0].id;
+    } else {
+      this.players[this.players.length - 1].credits -= this.minimumBet;
+      this.bigBlind = this.players[this.players.length - 1].id;
+    }
+    this.pot += this.minimumBet;
   }
 
   broadcast() {
@@ -145,6 +176,18 @@ class Round {
     if (this.players.length === 1) {
       return true;
     }
+
+    // console.log('equal bets: ' + this.equalBets());
+    console.log('current bet: ' + this.currentBet);
+    this.players.forEach((player) =>
+      console.log(player.name + ' credits:' + player.credits)
+    );
+    console.log('bets array: ' + this.playerBets);
+    console.log('lengte van player bets: ' + this.playerBets.length);
+    console.log('aantal spelers: ' + this.players.length);
+    console.log('raise amount: ' + this.raiseAmount);
+
+    // check for all in players -> equalize there bet
 
     if (this.equalBets() && this.playerBets.length === this.players.length) {
       return true;
