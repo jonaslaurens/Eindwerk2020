@@ -1,51 +1,59 @@
 module.exports = handleCall = (round, player, index) => {
-  const { minimumBet } = round;
+  const { bigBlind, currentBet } = round;
 
   // bet array empty, no bets yet so call minbet
   if (!round.hasBets()) {
-    player.credits -= minimumBet;
-    round.playerBets[index] = minimumBet;
-    round.addToPot(minimumBet);
+    player.credits -= bigBlind;
+    round.playerBets[index] = bigBlind;
+    round.addToPot(bigBlind);
     return;
   }
 
-  // we have bets so find highest we need to equalize that bet
+  // is player BB?
+  const isBigBlind = round.isBigBlind(player.id);
+
+  // highest bet in betArr
   const highestBet = round.getHighestBet();
 
   // calculate difference between highest and previous bet
   const difference = highestBet - round.playerBets[index];
 
-  // has player gone allin?
-  if (difference > player.credits) {
-    // add remaining player creds to pot
+  if (highestBet >= player.credits) {
     round.addToPot(player.credits);
-
-    // set player creds to 0
-    player.credits = 0;
-
-    // set player all in true, so we can check if anyone has gone allin (set betarr equal)
     player.allIn = true;
-  }
-
-  // if difference is not a number we havnt got a bet from this player
-  if (isNaN(difference)) {
-    // player is big blind and called? he already put creds in pot so we set his bet to minbet
-    if (player.id === round.bigBlind) {
-      round.playerBets[index] = minimumBet;
-      return;
-    }
-
-    // player is not bigblind we substract minbet from his creds, add it to the pot and set his bet as the min bet
-    round.playerBets[index] = minimumBet;
-    player.credits -= minimumBet;
-    round.addToPot(minimumBet);
+    player.credits = 0;
+    round.playerBets[index] = highestBet;
     return;
   }
 
-  // player has already made a bet and calls a previous raise
-  // we set the player's bet to the highest bet (raised by other player)
-  // remove diff from his credits and add it to the pot
-  round.playerBets[index] += difference;
-  player.credits -= difference;
-  round.addToPot(difference);
+  // check if player has made bet
+  if (typeof round.playerBets[index] === 'undefined') {
+    // check if current player is bigblind
+    if (isBigBlind) {
+      round.addToPot(highestBet - bigBlind);
+      player.credits -= highestBet - bigBlind;
+      round.playerBets[index] = highestBet;
+      return;
+    }
+
+    // not big blind? then add difference to pot
+    round.addToPot(highestBet);
+    player.credits -= highestBet;
+    round.playerBets[index] = highestBet;
+    return;
+  } else {
+    // check if player is bigblind
+    if (isBigBlind) {
+      round.addToPot(difference - bigBlind);
+      player.credits -= difference - bigBlind;
+      round.playerBets[index] = highestBet;
+      return;
+    }
+
+    // not big blind? then add difference to pot
+    round.addToPot(difference);
+    player.credits -= difference;
+    round.playerBets[index] = highestBet;
+    return;
+  }
 };

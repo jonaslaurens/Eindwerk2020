@@ -20,12 +20,13 @@ class Round {
     this.currentDecider = decider;
 
     // holds minimum bet
-    this.minimumBet = 50;
+    this.bigBlind = 50;
 
     // hold the current bet, if there is a call this will be added to pot
     this.currentBet = 0;
 
-    this.raiseAmount = 0;
+    // hold big blind (player id)
+    this.currentBigBlind = 0;
 
     // holds the players bets
     this.playerBets = [];
@@ -100,13 +101,17 @@ class Round {
 
   handleBigBlind() {
     if (this.currentDecider === this.players.length - 1) {
-      this.players[0].credits -= this.minimumBet;
-      this.bigBlind = this.players[0].id;
+      this.players[0].credits -= this.bigBlind;
+      this.currentBigBlind = this.players[0].id;
     } else {
-      this.players[this.players.length - 1].credits -= this.minimumBet;
-      this.bigBlind = this.players[this.players.length - 1].id;
+      this.players[this.players.length - 1].credits -= this.bigBlind;
+      this.currentBigBlind = this.players[this.players.length - 1].id;
     }
-    this.pot += this.minimumBet;
+    this.pot += this.bigBlind;
+  }
+
+  isBigBlind(playerId) {
+    return playerId === this.currentBigBlind;
   }
 
   broadcast() {
@@ -187,7 +192,13 @@ class Round {
     console.log('aantal spelers: ' + this.players.length);
     console.log('raise amount: ' + this.raiseAmount);
 
+    // TODO:
     // check for all in players -> equalize there bet
+    // check all players if they have gone all in
+
+    // if they went all in equalize there bet inside the betarr to the highest bet
+
+    // tho if they win, they win the full pot.. maybe a later fix
 
     if (this.equalBets() && this.playerBets.length === this.players.length) {
       return true;

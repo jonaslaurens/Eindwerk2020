@@ -28,9 +28,7 @@ const Card = ({ value, suit }) => {
   return (
     <div className="card">
       <h6>{renderFaceCard(value)}</h6>
-      <div
-        className={`suit ${suit.toLowerCase()} suit-${suit.toLowerCase()} `}
-      ></div>
+      <div className={`suit ${suit.toLowerCase()}`}></div>
       <h6>{renderFaceCard(value)}</h6>
     </div>
   );
