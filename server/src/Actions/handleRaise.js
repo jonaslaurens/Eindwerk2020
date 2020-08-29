@@ -1,4 +1,12 @@
-module.exports = handleRaise = (round, player, index, raiseAmount) => {
+/**
+ * Handle raise
+ * @description Handles the raise action from a player
+ * @param {object} round - Is the round model
+ * @param {object} player - Is the player model
+ * @param {number} index  - represents the index of the player
+ * @param {number} raiseAmount - the amount the player wishes to raise with
+ */
+const handleRaise = (round, player, index, raiseAmount) => {
   round.currentBet += raiseAmount;
   // has player gone all in with the raise?
   if (raiseAmount >= player.credits) {
@@ -26,3 +34,5 @@ module.exports = handleRaise = (round, player, index, raiseAmount) => {
 
   return;
 };
+
+module.exports = handleRaise;
