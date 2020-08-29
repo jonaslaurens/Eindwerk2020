@@ -8,11 +8,15 @@
  */
 const handleRaise = (round, player, index, raiseAmount) => {
   round.currentBet += raiseAmount;
+
   // has player gone all in with the raise?
-  if (raiseAmount >= player.credits) {
+  if (round.currentBet > player.credits) {
+    // highest bet in betArr
+    const highestBet = round.getHighestBet();
+
     round.addToPot(player.credits);
 
-    round.playerBets[index] += player.credits;
+    round.playerBets[index] = highestBet;
 
     // set player creds to 0
     player.credits = 0;
@@ -24,10 +28,10 @@ const handleRaise = (round, player, index, raiseAmount) => {
   }
 
   // add his raise to the pot
-  round.addToPot(raiseAmount);
+  round.addToPot(round.currentBet);
 
-  // substract his raise from his creds
-  player.credits -= raiseAmount;
+  // substract his raise and the difference from last raise from his creds
+  player.credits -= round.currentBet;
 
   // add currentbet as the players bet in the bet array
   round.playerBets[index] = round.currentBet;

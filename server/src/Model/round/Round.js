@@ -180,6 +180,16 @@ class Round {
       return true;
     }
 
+    // check for allin player set his bet to the highest
+    this.players.forEach((player, index) => {
+      if (player.hasOwnProperty('allIn')) {
+        if (player.allIn) {
+          const highestBet = this.getHighestBet();
+          this.playerBets[index] = highestBet;
+        }
+      }
+    });
+
     if (
       this.equalBets() &&
       this.playerBets.length === this.players.length &&
