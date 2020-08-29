@@ -1,4 +1,3 @@
-const addPlayer = require('./Actions/addPlayer');
 const handleRaise = require('./Actions/handleRaise');
 const handleCall = require('./Actions/handleCall');
 const handleFold = require('./Actions/handleFold');
