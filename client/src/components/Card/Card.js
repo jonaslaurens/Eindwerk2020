@@ -21,6 +21,8 @@ const Card = ({ value, suit }) => {
       case 14:
         val = 'A';
         break;
+      default:
+        return val;
     }
     return val;
   };

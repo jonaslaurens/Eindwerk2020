@@ -22,7 +22,6 @@ const Decisions = () => {
       decision: action,
       amount: action === 'raise' ? 100 : '',
     };
-    // handle it
     dispatch(setError(''));
     emitEvent('decision', decision);
     dispatch(setDecision(false));

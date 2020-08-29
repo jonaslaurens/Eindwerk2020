@@ -26,7 +26,7 @@ export const login = (values, setSocket) => (dispatch) => {
 
     // handle failed connection
     socket.on('connect_error', (error) => {
-      dispatch(setError({ casinoServer: 'wrong adress' }));
+      dispatch(setError({ casinoServer: 'That server is not responding' }));
     });
   }
 };
