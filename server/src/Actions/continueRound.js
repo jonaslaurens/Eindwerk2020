@@ -4,7 +4,6 @@ const getCombinationIndex = require('../Helpers/getCombinationIndex');
 const getCombination = require('../Helpers/getCombination');
 const getCurrentPlayer = require('../Helpers/getCurrentPlayer');
 
-const logStuff = require('../../helpers/logStuff');
 let gameNumber = 0;
 
 module.exports = continueRound = (table, round) => {
@@ -47,8 +46,6 @@ module.exports = continueRound = (table, round) => {
       };
       socket.emit('broadcast', data);
     });
-
-    logStuff(table, round, gameNumber, winner);
 
     // set highest hand
     table.setHighHand(winner.result.name);
