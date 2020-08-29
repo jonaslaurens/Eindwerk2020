@@ -168,9 +168,6 @@ class Round {
   askDecision() {
     const currentPlayer = this.players[this.currentDecider];
 
-    console.log('currentDecider: ' + this.currentDecider);
-    console.log('number of players: ' + this.players.length);
-
     currentPlayer.socket.emit('decision', {
       actions: any,
       message: 'your turn!',
@@ -182,8 +179,6 @@ class Round {
     if (this.players.length === 1) {
       return true;
     }
-
-    console.log(this.playerBets[1]);
 
     if (
       this.equalBets() &&

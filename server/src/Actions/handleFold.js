@@ -7,9 +7,6 @@
 module.exports = handleFold = (round, index) => {
   round.players.splice(index, 1);
   round.playerBets = round.playerBets.filter((player, i) => i !== index);
-
-  console.log('player bets: ' + round.playerBets);
-
   round.currentDecider--;
 
   return;
