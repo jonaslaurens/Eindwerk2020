@@ -190,6 +190,10 @@ class Round {
       }
     });
 
+    // if bets are all the same
+    // the betarr length is the same as the players left (not folded)
+    // and the playerbets does not include an undefined
+    // we reached the end game
     if (
       this.equalBets() &&
       this.playerBets.length === this.players.length &&

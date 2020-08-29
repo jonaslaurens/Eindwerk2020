@@ -104,6 +104,13 @@ export const WSProvider = (props) => {
           });
           break;
 
+        case 'grandWinner':
+          toast.info(payload.message, {
+            pauseOnHover: true,
+            progress: undefined,
+          });
+          break;
+
         // handle end game
         case 'endgame':
           if (won) {

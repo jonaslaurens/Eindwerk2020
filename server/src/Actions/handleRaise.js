@@ -34,7 +34,11 @@ const handleRaise = (round, player, index, raiseAmount) => {
   player.credits -= round.currentBet;
 
   // add currentbet as the players bet in the bet array
-  round.playerBets[index] = round.currentBet;
+  if (round.playerBets[index] > 0) {
+    round.playerBets[index] += round.currentBet;
+  } else {
+    round.playerBets[index] = round.currentBet;
+  }
 
   return;
 };

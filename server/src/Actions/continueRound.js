@@ -55,7 +55,18 @@ module.exports = continueRound = (table, round) => {
 
     // try starting new game
     if (!table.hasAvailableSpots()) {
-      return table.startGame();
+      if (table.checkPlayerCredits().length > 1) {
+        return table.startGame();
+      } else {
+        table.grandWinner = table.checkPlayerCredits();
+        return table.getSockets().forEach((socket) => {
+          const data = {
+            type: 'grandWinner',
+            message: `${table.grandWinner.name} won all credits, game's over.`,
+          };
+          socket.emit('broadcast', data);
+        });
+      }
     }
   }
 
