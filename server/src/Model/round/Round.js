@@ -180,24 +180,6 @@ class Round {
       return true;
     }
 
-    // console.log('equal bets: ' + this.equalBets());
-    console.log('current bet: ' + this.currentBet);
-    this.players.forEach((player) =>
-      console.log(player.name + ' credits:' + player.credits)
-    );
-    console.log('bets array: ' + this.playerBets);
-    console.log('lengte van player bets: ' + this.playerBets.length);
-    console.log('aantal spelers: ' + this.players.length);
-    console.log('raise amount: ' + this.raiseAmount);
-
-    // TODO:
-    // check for all in players -> equalize there bet
-    // check all players if they have gone all in
-
-    // if they went all in equalize there bet inside the betarr to the highest bet
-
-    // tho if they win, they win the full pot.. maybe a later fix
-
     if (this.equalBets() && this.playerBets.length === this.players.length) {
       return true;
     }

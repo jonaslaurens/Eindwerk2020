@@ -11,7 +11,6 @@ module.exports = validateParams = (params) => {
     }
   }
 
-  // TODO: needs more work.. ik moet elke key na kijken maar geeft niet gewenste resultaat weer..
   let check = true;
 
   params.forEach((element) => {

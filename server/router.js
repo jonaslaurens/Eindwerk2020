@@ -28,8 +28,6 @@ module.exports = (app, casino) => {
   app.get('/tables', (req, res) => {
     const data = casino.tables.map((table) => table.toObject());
 
-    console.log(data);
-
     return res.status(200).json(data);
   });
 };

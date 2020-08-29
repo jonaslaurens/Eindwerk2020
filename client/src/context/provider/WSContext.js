@@ -116,7 +116,10 @@ export const WSProvider = (props) => {
           }
           break;
         default:
-          console.log('something went wrong..');
+          toast.warn(`something went wrong..`, {
+            pauseOnHover: true,
+            progress: undefined,
+          });
       }
     });
   };
