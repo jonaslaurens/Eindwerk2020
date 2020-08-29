@@ -48,13 +48,15 @@ const attachListenersToSocket = (socket, casino) => {
   socket.on('decision', (payload) => {
     // get table based on payload
     const table = casino.getTable(payload.table);
+    const currentRound = table.getRound();
 
     // get current player
-    const { player, index } = getCurrentPlayer(table, socket);
+    const { player, index } = getCurrentPlayer(currentRound, socket);
     console.info(`${player.name} will ${payload.decision}`);
 
+    console.log('player index: ' + index);
+
     // get the current round
-    const currentRound = table.getRound();
 
     // handle decision based on decision in the payload param
     switch (payload.decision) {

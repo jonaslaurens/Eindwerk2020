@@ -12,7 +12,7 @@ class Casino {
 
     // if there is no table with free spots create a new one
     if (!table) {
-      table = new Table(2);
+      table = new Table(4);
       this.tables.push(table);
     }
 
