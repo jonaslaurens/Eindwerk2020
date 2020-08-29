@@ -9,7 +9,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'high card';
@@ -25,7 +25,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 3, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'pair';
@@ -41,7 +41,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 3, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 2, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'two pair';
@@ -57,7 +57,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 3, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 3, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'three of a kind';
@@ -73,7 +73,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 4, suit: 'Hearts' },
       { value: 5, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'straight';
@@ -89,7 +89,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 7, suit: 'Clubs' },
       { value: 8, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'flush';
@@ -105,7 +105,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 3, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 2, suit: 'Diamonds' },
-      { value: 2, suit: 'Hearts' }
+      { value: 2, suit: 'Hearts' },
     ];
 
     const result = 'full house';
@@ -121,7 +121,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 3, suit: 'Hearts' },
       { value: 6, suit: 'Clubs' },
       { value: 3, suit: 'Diamonds' },
-      { value: 3, suit: 'Spades' }
+      { value: 3, suit: 'Spades' },
     ];
 
     const result = 'four of a kind';
@@ -137,7 +137,23 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 4, suit: 'Clubs' },
       { value: 5, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
+    ];
+
+    const result = 'straight flush';
+
+    expect(calculate(cards).name).toEqual(result);
+  });
+
+  test('Should be a straight flush', () => {
+    const cards = [
+      { value: 1, suit: 'Clubs' },
+      { value: 3, suit: 'Diamonds' },
+      { value: 8, suit: 'Clubs' },
+      { value: 10, suit: 'Clubs' },
+      { value: 11, suit: 'Clubs' },
+      { value: 12, suit: 'Clubs' },
+      { value: 9, suit: 'Clubs' },
     ];
 
     const result = 'straight flush';
@@ -153,7 +169,7 @@ describe('Test if calculate correctly handles different scenarios', () => {
       { value: 12, suit: 'Clubs' },
       { value: 13, suit: 'Clubs' },
       { value: 8, suit: 'Diamonds' },
-      { value: 10, suit: 'Hearts' }
+      { value: 10, suit: 'Hearts' },
     ];
 
     const result = 'royal flush';

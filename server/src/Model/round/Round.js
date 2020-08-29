@@ -20,10 +20,13 @@ class Round {
     this.currentDecider = decider;
 
     // holds minimum bet
-    this.minimumBet = 50;
+    this.bigBlind = 50;
 
     // hold the current bet, if there is a call this will be added to pot
     this.currentBet = 0;
+
+    // hold big blind (player id)
+    this.currentBigBlind = 0;
 
     // holds the players bets
     this.playerBets = [];
@@ -57,7 +60,10 @@ class Round {
       });
     });
 
-    // start round by asking decision
+    this.handleBigBlind();
+
+    this.sendCredits();
+
     this.askDecision();
   }
 
@@ -66,12 +72,66 @@ class Round {
     return this.playerBets.every((val, i, arr) => val === arr[0]);
   }
 
+  addToPot(amount) {
+    this.pot += amount;
+  }
+
   // returns all active players
   getActivePlayers() {
     return this.players;
   }
 
-  // returns an object containing the id and credits of each player
+  // returns the communityCards
+  getCommunityCards() {
+    return this.communityCards;
+  }
+
+  hasBets() {
+    return this.playerBets.length > 0;
+  }
+
+  getHighestBet() {
+    return this.playerBets.reduce((a, b) => {
+      return Math.max(a, b);
+    });
+  }
+
+  handleBigBlind() {
+    if (this.currentDecider === this.players.length - 1) {
+      this.players[0].credits -= this.bigBlind;
+      this.currentBigBlind = this.players[0].id;
+    } else {
+      this.players[this.players.length - 1].credits -= this.bigBlind;
+      this.currentBigBlind = this.players[this.players.length - 1].id;
+    }
+    this.pot += this.bigBlind;
+  }
+
+  isBigBlind(playerId) {
+    return playerId === this.currentBigBlind;
+  }
+
+  broadcast() {
+    this.players.forEach((player) => {
+      const data = {
+        type: 'newPlayerAdded',
+        table: {
+          id: this.id,
+          players: this.players
+            .filter((currentPlayer) => currentPlayer.id !== player.id)
+            .map((player) => {
+              return {
+                name: player.name,
+                id: player.id,
+                credits: player.credits,
+              };
+            }),
+        },
+      };
+      player.socket.emit('broadcast', data);
+    });
+  }
+
   getPlayerCredits() {
     return this.players.map((player) => {
       return {
@@ -119,6 +179,24 @@ class Round {
     if (this.players.length === 1) {
       return true;
     }
+
+    // console.log('equal bets: ' + this.equalBets());
+    console.log('current bet: ' + this.currentBet);
+    this.players.forEach((player) =>
+      console.log(player.name + ' credits:' + player.credits)
+    );
+    console.log('bets array: ' + this.playerBets);
+    console.log('lengte van player bets: ' + this.playerBets.length);
+    console.log('aantal spelers: ' + this.players.length);
+    console.log('raise amount: ' + this.raiseAmount);
+
+    // TODO:
+    // check for all in players -> equalize there bet
+    // check all players if they have gone all in
+
+    // if they went all in equalize there bet inside the betarr to the highest bet
+
+    // tho if they win, they win the full pot.. maybe a later fix
 
     if (this.equalBets() && this.playerBets.length === this.players.length) {
       return true;

@@ -1,4 +1,4 @@
-const groupCards = require('../groupCards/groupCards');
+const groupCards = require('../groupCards');
 const checkCombinations = require('../checkCombinations');
 
 module.exports = decideWinner = (players, communityCards) => {

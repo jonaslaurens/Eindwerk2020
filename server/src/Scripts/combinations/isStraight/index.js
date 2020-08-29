@@ -1,6 +1,4 @@
-const isLowStraight = require('../isLowStraight');
-
-module.exports = isStraight = countedCards => {
+module.exports = isStraight = (countedCards) => {
   let counter = 0;
 
   const gotAce = countedCards[13] > 0 ? true : false;
@@ -8,7 +6,13 @@ module.exports = isStraight = countedCards => {
   // if gotAce is true, check if we have a low ace straight or hight ace straight
   if (gotAce) {
     // check for low
-    if (isLowStraight(countedCards)) return true;
+    if (
+      countedCards[1] > 0 &&
+      countedCards[2] > 0 &&
+      countedCards[3] > 0 &&
+      countedCards[4] > 0
+    )
+      return true;
 
     // check for high
     if (
@@ -23,7 +27,7 @@ module.exports = isStraight = countedCards => {
 
   // check if we got a medior straight
   let mediorStraight = false;
-  countedCards.map(card => {
+  countedCards.map((card) => {
     if (card === 0) {
       counter = 0;
       return;

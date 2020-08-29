@@ -1,6 +1,6 @@
 // combination checks
 const isHighCard = require('../combinations/isHighCard');
-const isPair = require('../combinations/isPair/isPair');
+const isPair = require('../combinations/isPair');
 const isTwoPair = require('../combinations/isTwoPair');
 const isStraight = require('../combinations/isStraight');
 const isFlush = require('../combinations/isFlush');
@@ -16,10 +16,10 @@ const COMBINATIONS = require('../../Constants/combinations');
 const countCards = require('../combinations/countCards');
 const countSuits = require('../combinations/countSuits');
 
-module.exports = calculate = cards => {
+module.exports = calculate = (cards) => {
   let result = {
     name: 'Nothing',
-    value: 0
+    value: 0,
   };
 
   const countedCards = countCards(cards);
@@ -49,7 +49,7 @@ module.exports = calculate = cards => {
     return result;
   }
 
-  if (isFlush(cards, countedSuits)) {
+  if (isFlush(countedSuits)) {
     result.name = COMBINATIONS[4];
     result.value = combinationValue(cards, 5);
     return result;

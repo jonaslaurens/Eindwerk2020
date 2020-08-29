@@ -11,9 +11,6 @@
 - generateID
 - decideWinner
 - checkCombinations
-- dealer (gewoon wa meer tests)
 - combinationValue
-- createSet
-- isLowStraight
 
 

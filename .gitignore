@@ -118,6 +118,7 @@ dist
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+*vscode/
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -220,3 +221,6 @@ fabric.properties
 .idea/$CACHE_FILE$
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,webstorm
+
+# Documentation
+docs/

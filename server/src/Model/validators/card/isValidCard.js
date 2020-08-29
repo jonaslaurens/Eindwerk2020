@@ -1,6 +1,11 @@
 const SUITS = require('../../../Constants/suits');
-
-module.exports = card => {
+/**
+ * @module validation/isValidCard
+ * @description validates the params given on the card object
+ * @param {Object} card - contains a value and a suit
+ * @returns {object} - A valid card
+ */
+module.exports = (card) => {
   const { value, suit } = card;
 
   // value should be of type Number

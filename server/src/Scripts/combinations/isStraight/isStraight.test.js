@@ -1,4 +1,5 @@
 const isStraight = require('./index');
+const countCards = require('../countCards');
 
 describe('test if given array contains the combination straight', () => {
   test('Result should be a true', () => {
@@ -9,10 +10,10 @@ describe('test if given array contains the combination straight', () => {
       { value: 5, suit: 'Clubs' },
       { value: 6, suit: 'Hearts' },
       { value: 10, suit: 'Clubs' },
-      { value: 11, suit: 'Diamonds' }
+      { value: 11, suit: 'Diamonds' },
     ];
 
-    expect(isStraight(cards)).toEqual(true);
+    expect(isStraight(countCards(cards))).toEqual(true);
   });
 
   test('Result should be true', () => {
@@ -23,10 +24,10 @@ describe('test if given array contains the combination straight', () => {
       { value: 4, suit: 'Diamonds' },
       { value: 5, suit: 'Clubs' },
       { value: 12, suit: 'Hearts' },
-      { value: 13, suit: 'Hearts' }
+      { value: 13, suit: 'Hearts' },
     ];
 
-    expect(isStraight(cards)).toEqual(true);
+    expect(isStraight(countCards(cards))).toEqual(true);
   });
 
   test('Result should be true', () => {
@@ -37,10 +38,10 @@ describe('test if given array contains the combination straight', () => {
       { value: 10, suit: 'Diamonds' },
       { value: 11, suit: 'Clubs' },
       { value: 12, suit: 'Hearts' },
-      { value: 13, suit: 'Hearts' }
+      { value: 13, suit: 'Hearts' },
     ];
 
-    expect(isStraight(cards)).toEqual(true);
+    expect(isStraight(countCards(cards))).toEqual(true);
   });
 
   test('Result should be false', () => {
@@ -51,9 +52,9 @@ describe('test if given array contains the combination straight', () => {
       { value: 5, suit: 'Diamonds' },
       { value: 10, suit: 'Clubs' },
       { value: 12, suit: 'Hearts' },
-      { value: 13, suit: 'Hearts' }
+      { value: 13, suit: 'Hearts' },
     ];
 
-    expect(isStraight(cards)).toEqual(false);
+    expect(isStraight(countCards(cards))).toEqual(false);
   });
 });

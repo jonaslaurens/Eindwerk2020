@@ -1,4 +1,5 @@
 const isStraightFlush = require('./index');
+const countSuits = require('../countSuits');
 
 describe('test if given array contains the combination flush', () => {
   test('Object contains a flush and a straight, result should be a true', () => {
@@ -9,10 +10,10 @@ describe('test if given array contains the combination flush', () => {
       { value: 10, suit: 'Clubs' },
       { value: 11, suit: 'Clubs' },
       { value: 12, suit: 'Clubs' },
-      { value: 13, suit: 'Clubs' }
+      { value: 13, suit: 'Clubs' },
     ];
 
-    expect(isStraightFlush(cards)).toEqual(true);
+    expect(isStraightFlush(cards, countSuits(cards))).toEqual(true);
   });
 
   test('Object contains a flush but no straight, result should be a false', () => {
@@ -23,10 +24,10 @@ describe('test if given array contains the combination flush', () => {
       { value: 5, suit: 'Clubs' },
       { value: 13, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
-      { value: 5, suit: 'Diamonds' }
+      { value: 5, suit: 'Diamonds' },
     ];
 
-    expect(isStraightFlush(cards)).toEqual(false);
+    expect(isStraightFlush(cards, countSuits(cards))).toEqual(false);
   });
 
   test('Object contains a straight but no flush, result should be a false', () => {
@@ -37,10 +38,10 @@ describe('test if given array contains the combination flush', () => {
       { value: 5, suit: 'Spades' },
       { value: 13, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
-      { value: 5, suit: 'Diamonds' }
+      { value: 5, suit: 'Diamonds' },
     ];
 
-    expect(isStraightFlush(cards)).toEqual(false);
+    expect(isStraightFlush(cards, countSuits(cards))).toEqual(false);
   });
 
   test('Object contains no flush or straight, result should be false', () => {
@@ -51,9 +52,9 @@ describe('test if given array contains the combination flush', () => {
       { value: 12, suit: 'Hearts' },
       { value: 13, suit: 'Hearts' },
       { value: 4, suit: 'Clubs' },
-      { value: 5, suit: 'Diamonds' }
+      { value: 5, suit: 'Diamonds' },
     ];
 
-    expect(isStraightFlush(cards)).toEqual(false);
+    expect(isStraightFlush(cards, countSuits(cards))).toEqual(false);
   });
 });
